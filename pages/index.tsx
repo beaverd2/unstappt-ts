@@ -161,10 +161,10 @@ const Home: NextPage = () => {
                 alignItems='flex-start'
               >
                 <TopBeers beersData={beers} isLoading={isLoading} />
-                {/* <TopBreweries beers={beers} isLoading={isLoading} /> */}
-                {/* <TopStyles beers={beers} isLoading={isLoading} /> */}
-                {/* <TopCountries beers={beers} isLoading={isLoading} /> */}
-                {/* <TopRegions beers={beers} isLoading={isLoading} /> */}
+                <TopBreweries beers={beers} isLoading={isLoading} />
+                <TopStyles beers={beers} isLoading={isLoading} />
+                <TopCountries beers={beers} isLoading={isLoading} />
+                <TopRegions beers={beers} isLoading={isLoading} />
               </Flex>
               <DrinkingPattern beers={beers} isLoading={isLoading} />
               <Sessions beers={beers} isLoading={isLoading} />

@@ -25,7 +25,6 @@ const TopElement: React.FC<TopElementProps> = ({
   hoverable,
 }) => {
   const MotionFlex = motion(Flex);
-  // const MotionFlex = Flex;
 
   const openInNewTab = (url: string) => {
     const newWindow = window.open(
