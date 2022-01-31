@@ -96,7 +96,7 @@ const Activity: React.FC<ActivityProps> = ({ beers, startDate, endDate }) => {
               },
             },
           },
-          y: { max: Math.max.apply(null, data) + 1, ticks: { stepSize: 1 } },
+          y: { max: Math.max.apply(null, data) + 1, ticks: { precision: 0 } },
         },
       }}
       data={{

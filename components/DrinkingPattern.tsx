@@ -189,7 +189,7 @@ const DrinkingPattern: React.FC<DrinkingPatternProps> = ({
                 x: { grid: { display: false } },
                 y: {
                   max: filter === 'days' ? daysData.max : hoursData.max,
-                  ticks: { stepSize: 1 },
+                  ticks: { precision: 0 },
                 },
               },
             }}
