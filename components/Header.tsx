@@ -6,6 +6,8 @@ interface HeaderProps {
   fetchAll: (username: string) => Promise<void>;
 }
 
+// todo: пустой юзернейм или русские символы ломают запрос и выводит 404 => контролль формы
+
 const Header: React.FC<HeaderProps> = ({ fetchAll }) => {
   const [search, setSearch] = useState('');
   const handleInput = (e: React.SyntheticEvent<EventTarget>) => {

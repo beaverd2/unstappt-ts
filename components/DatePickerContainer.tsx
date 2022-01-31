@@ -6,8 +6,6 @@ import React, { useState, forwardRef, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-// todo: переделать при поиске нового юзера дата не обнулсяется до последней за неделю
-
 interface DatePickerContainerProps {
   fetchBeersForRange: (
     startDate: dayjs.Dayjs,

@@ -35,64 +35,80 @@ const Home: NextPage = () => {
   const [startDate, setStartDate] = useState(dayjs().subtract(7, 'days'));
   const [endDate, setEndDate] = useState(dayjs());
   const [isLoading, setIsLoading] = useState(false);
-  const auth = `&client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&client_secret=${process.env.NEXT_PUBLIC_CLIENT_SECRET}`;
+  // const auth = `&client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&client_secret=${process.env.NEXT_PUBLIC_CLIENT_SECRET}`;
 
   const fetchBeers = async (url: string): Promise<IBeers[] | ErrorMessage> => {
     setIsLoading(true);
-    const fullUrl = url + auth;
-    try {
-      const response = await axios.get(fullUrl);
-      const data = response.data.response;
-      const beers = data.beers.items;
-      if (data.total_count > 50) {
-        let endpoints = [
-          ...Array(Math.floor(data.total_count / 50)).keys(),
-        ].map((key) => fullUrl + '&offset=' + (key + 1) * 50);
-        const allResponses = await axios.all(
-          endpoints.map((endpoint) => axios.get(endpoint))
-        );
-        const allBeers = allResponses
-          .map((response) => response.data.response.beers.items)
-          .reduce((a, b) => a.concat(b), []);
-        return beers.concat(allBeers);
-      } else {
-        return beers;
-      }
-    } catch (error) {
-      const err = error as AxiosError;
-      return { error: err.response?.data.meta.error_detail };
-    } finally {
+    const response = await axios.get(`api/beer/${url}`);
+    const data = response.data;
+    const beers = data.beers.items;
+    if (data.total_count > 50) {
+      let endpoints = [...Array(Math.floor(data.total_count / 50)).keys()].map(
+        (key) => 'api/beer/' + url + '&offset=' + (key + 1) * 50
+      );
+      const allResponses = await axios.all(
+        endpoints.map((endpoint) => axios.get(endpoint))
+      );
+      const allBeers = allResponses
+        .map((response) => response.data.beers.items)
+        .reduce((a, b) => a.concat(b), []);
       setIsLoading(false);
+      return beers.concat(allBeers);
+    } else {
+      setIsLoading(false);
+      return beers;
     }
   };
+  // const fetchBeers = async (url: string): Promise<IBeers[] | ErrorMessage> => {
+  //   setIsLoading(true);
+  //   const fullUrl = url + auth;
+  //   try {
+  //     const response = await axios.get(fullUrl);
+  //     const data = response.data.response;
+  //     const beers = data.beers.items;
+  //     if (data.total_count > 50) {
+  //       let endpoints = [
+  //         ...Array(Math.floor(data.total_count / 50)).keys(),
+  //       ].map((key) => fullUrl + '&offset=' + (key + 1) * 50);
+  //       const allResponses = await axios.all(
+  //         endpoints.map((endpoint) => axios.get(endpoint))
+  //       );
+  //       const allBeers = allResponses
+  //         .map((response) => response.data.response.beers.items)
+  //         .reduce((a, b) => a.concat(b), []);
+  //       return beers.concat(allBeers);
+  //     } else {
+  //       return beers;
+  //     }
+  //   } catch (error) {
+  //     const err = error as AxiosError;
+  //     return { error: err.response?.data.meta.error_detail };
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const fetchUser = async (username: string): Promise<IUser | ErrorMessage> => {
     setIsLoading(true);
-    try {
-      const response = await axios.get(
-        `https://api.untappd.com/v4/user/info/${username}?` + auth
-      );
-      const user: IUser = response.data.response.user;
-      return user;
-    } catch (error) {
-      const err = error as AxiosError;
-      return { error: err.response?.data.meta.error_detail };
-    } finally {
-      setIsLoading(false);
-    }
+    const response = await axios.get(`api/user/${username}`);
+    console.log('response', response);
+    setIsLoading(false);
+    return response.data;
   };
+
   const fetchAll = async (username: string) => {
     const now = dayjs();
     const weekAgo = dayjs().subtract(7, 'days');
     const userData = await fetchUser(username);
+    if ('error' in userData) {
+      Notification(userData.error);
+      return;
+    }
     const allBeersData = await fetchBeers(
-      `https://api.untappd.com/v4/user/beers/${username}?limit=50&start_date=${weekAgo.format(
+      `${username}?start_date=${weekAgo.format(
         'YYYY-MM-DD'
       )}&end_date=${now.format('YYYY-MM-DD')}`
     );
-    if ('error' in userData) {
-      Notification(userData.error);
-    }
     if ('error' in allBeersData) {
       Notification(allBeersData.error);
     }
@@ -113,9 +129,7 @@ const Home: NextPage = () => {
     }
     if (user) {
       const allBeersData = await fetchBeers(
-        `https://api.untappd.com/v4/user/beers/${
-          user.user_name
-        }?limit=50&start_date=${dayjs(startDate).format(
+        `${user.user_name}?start_date=${dayjs(startDate).format(
           'YYYY-MM-DD'
         )}&end_date=${dayjs(endDate).format('YYYY-MM-DD')}`
       );
@@ -124,6 +138,7 @@ const Home: NextPage = () => {
         Notification(allBeersData.error);
       }
       if (!('error' in allBeersData)) {
+        console.log('allBeersData', allBeersData);
         setStartDate(startDate);
         setEndDate(endDate);
         setBeers(allBeersData as IBeers[]);
