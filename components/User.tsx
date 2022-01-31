@@ -6,7 +6,7 @@ import { Skeleton, SkeletonCircle } from '@chakra-ui/react';
 import { IUser } from '../types/IUser';
 
 interface UserProps {
-  user: IUser;
+  user?: IUser;
   isLoading: boolean;
 }
 

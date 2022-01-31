@@ -2,8 +2,22 @@ import React, { memo } from 'react';
 import { Flex, Heading } from '@chakra-ui/layout';
 import { Skeleton } from '@chakra-ui/react';
 import Activity from './Activity';
+import { IBeers } from '../../types/IBeers';
+import dayjs from 'dayjs';
 
-const ActivityContainer = ({ beers, startDate, endDate, isLoading }) => {
+interface ActivityContainerProps {
+  beers: IBeers[];
+  startDate: dayjs.Dayjs;
+  endDate: dayjs.Dayjs;
+  isLoading: boolean;
+}
+
+const ActivityContainer: React.FC<ActivityContainerProps> = ({
+  beers,
+  startDate,
+  endDate,
+  isLoading,
+}) => {
   return (
     <Flex marginTop={4}>
       <Flex

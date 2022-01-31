@@ -8,7 +8,7 @@ interface TopListProps {
     name2?: string;
     img?: string;
     url?: string;
-    count?: string;
+    count?: number;
     avgRating: number;
   }[];
   isLoading: boolean;
@@ -53,7 +53,7 @@ const TopList: React.FC<TopListProps> = ({
                     name2: data?.name2,
                     img: data?.img,
                     url: data?.url,
-                    count: data.count,
+                    count: data?.count,
                     avgRating: data.avgRating,
                   }}
                   filter={filter}

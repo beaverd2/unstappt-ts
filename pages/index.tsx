@@ -1,14 +1,12 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-
 import React, { useState } from 'react';
 import { Flex, Container, Center, Link } from '@chakra-ui/react';
 import { createStandaloneToast } from '@chakra-ui/toast';
 import Header from '../components/Header';
 import User from '../components/User';
 import DrinkingPattern from '../components/DrinkingPattern';
-import axios from 'axios';
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import TopBeers from '../components/TopBeers';
 import TopRegions from '../components/TopRegions';
 import TopStyles from '../components/TopStyles';
@@ -25,19 +23,21 @@ import { beers1, user1, emptyBeers } from '../MockApi';
 import { IUser } from '../types/IUser';
 import { IBeers } from '../types/IBeers';
 
+type ErrorMessage = {
+  error: string;
+};
+
 const Home: NextPage = () => {
-  const [beers, setBeers] = useState<IBeers[]>(beers1.response.beers.items);
-  const [user, setUser] = useState<IUser>(user1.user);
-  const [error, setError] = useState(null);
-  // const [beers, setBeers] = useState(null);
-  // const [user, setUser] = useState(null);
-  const [startDate, setStartDate] = useState(
-    dayjs().subtract(7, 'days').format()
-  );
-  const [endDate, setEndDate] = useState(dayjs().format());
+  // const [beers, setBeers] = useState<IBeers[]>(beers1.response.beers.items);
+  // const [user, setUser] = useState<IUser>(user1.user);
+  const [beers, setBeers] = useState<IBeers[]>([]);
+  const [user, setUser] = useState<IUser>();
+  const [startDate, setStartDate] = useState(dayjs().subtract(7, 'days'));
+  const [endDate, setEndDate] = useState(dayjs());
   const [isLoading, setIsLoading] = useState(false);
   const auth = `&client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&client_secret=${process.env.NEXT_PUBLIC_CLIENT_SECRET}`;
-  const fetchBeers = async (url: string) => {
+
+  const fetchBeers = async (url: string): Promise<IBeers[] | ErrorMessage> => {
     setIsLoading(true);
     const fullUrl = url + auth;
     try {
@@ -58,14 +58,15 @@ const Home: NextPage = () => {
       } else {
         return beers;
       }
-    } catch (error: any) {
-      setError(error?.response.data.meta.error_detail);
+    } catch (error) {
+      const err = error as AxiosError;
+      return { error: err.response?.data.meta.error_detail };
     } finally {
       setIsLoading(false);
     }
   };
 
-  const fetchUser = async (username: string) => {
+  const fetchUser = async (username: string): Promise<IUser | ErrorMessage> => {
     setIsLoading(true);
     try {
       const response = await axios.get(
@@ -73,8 +74,9 @@ const Home: NextPage = () => {
       );
       const user: IUser = response.data.response.user;
       return user;
-    } catch (error: any) {
-      setError(error?.response.data.meta.error_detail);
+    } catch (error) {
+      const err = error as AxiosError;
+      return { error: err.response?.data.meta.error_detail };
     } finally {
       setIsLoading(false);
     }
@@ -82,38 +84,50 @@ const Home: NextPage = () => {
   const fetchAll = async (username: string) => {
     const now = dayjs();
     const weekAgo = dayjs().subtract(7, 'days');
-    const user = await fetchUser(username);
-    const allBeers = await fetchBeers(
+    const userData = await fetchUser(username);
+    const allBeersData = await fetchBeers(
       `https://api.untappd.com/v4/user/beers/${username}?limit=50&start_date=${weekAgo.format(
         'YYYY-MM-DD'
       )}&end_date=${now.format('YYYY-MM-DD')}`
     );
-    if (error) {
-      Notification(error);
+    if ('error' in userData) {
+      Notification(userData.error);
     }
-    if (!error) {
-      setStartDate(weekAgo.format());
-      setEndDate(now.format());
-      setUser(user as IUser);
-      setBeers(allBeers);
+    if ('error' in allBeersData) {
+      Notification(allBeersData.error);
+    }
+    if (!('error' in userData) && !('error' in allBeersData)) {
+      setStartDate(weekAgo);
+      setEndDate(now);
+      setUser(userData as IUser);
+      setBeers(allBeersData as IBeers[]);
     }
   };
 
-  const fetchBeersForRange = async (startDate: string, endDate: string) => {
-    const allBeers = await fetchBeers(
-      `https://api.untappd.com/v4/user/beers/${
-        user.user_name
-      }?limit=50&start_date=${dayjs(startDate).format(
-        'YYYY-MM-DD'
-      )}&end_date=${dayjs(endDate).format('YYYY-MM-DD')}`
-    );
-    if (error) {
-      Notification(error);
+  const fetchBeersForRange = async (
+    startDate: dayjs.Dayjs,
+    endDate: dayjs.Dayjs
+  ) => {
+    if (!user) {
+      Notification('no user');
     }
-    if (!error) {
-      setStartDate(startDate);
-      setEndDate(endDate);
-      setBeers(allBeers);
+    if (user) {
+      const allBeersData = await fetchBeers(
+        `https://api.untappd.com/v4/user/beers/${
+          user.user_name
+        }?limit=50&start_date=${dayjs(startDate).format(
+          'YYYY-MM-DD'
+        )}&end_date=${dayjs(endDate).format('YYYY-MM-DD')}`
+      );
+
+      if ('error' in allBeersData) {
+        Notification(allBeersData.error);
+      }
+      if (!('error' in allBeersData)) {
+        setStartDate(startDate);
+        setEndDate(endDate);
+        setBeers(allBeersData as IBeers[]);
+      }
     }
   };
 
@@ -139,13 +153,15 @@ const Home: NextPage = () => {
       </Head>
       <Flex bg='gray.100' flexDir='column' flexWrap='wrap' minH='100vh'>
         <Header fetchAll={fetchAll} />
-        {(beers || isLoading) && (
+        {((beers && user) || isLoading) && (
           <>
             <Container maxW={['container.sm', 'container.md', 'container.lg']}>
               <User isLoading={isLoading} user={user} />
               <DatePickerContainer
                 fetchBeersForRange={fetchBeersForRange}
                 isLoading={isLoading}
+                startDate={startDate.$d}
+                endDate={endDate.$d}
               />
               <Statistics beers={beers} isLoading={isLoading} />
               <ActivityContainer

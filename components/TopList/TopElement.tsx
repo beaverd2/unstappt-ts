@@ -9,7 +9,7 @@ interface TopElementProps {
     name2?: string;
     img?: string;
     url?: string;
-    count?: string;
+    count?: number;
     avgRating: number;
     rating?: number;
   };

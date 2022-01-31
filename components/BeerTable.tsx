@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import dayjs from 'dayjs';
 import { Flex, Heading } from '@chakra-ui/layout';
 import React, { memo, useState, useEffect } from 'react';
@@ -14,14 +15,32 @@ import {
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { useTable, useSortBy } from 'react-table';
 import { useBreakpointValue } from '@chakra-ui/media-query';
+import { IBeers } from '../types/IBeers';
+import { IUser } from '../types/IUser';
 
-const BeerTable = ({ beers, isLoading, user }) => {
-  const [tableData, setTableData] = useState([]);
+interface BeerTableProps {
+  beers: IBeers[];
+  isLoading: boolean;
+  user?: IUser;
+}
+
+interface TableData {
+  beerName: string;
+  breweryName: string;
+  style: string;
+  userRating: string;
+  globalRating: number;
+  date: string;
+  id: number;
+}
+
+const BeerTable: React.FC<BeerTableProps> = ({ beers, isLoading, user }) => {
+  const [tableData, setTableData] = useState<TableData[]>([]);
   const isMoible = useBreakpointValue({ base: true, md: false });
 
   useEffect(() => {
     if (beers) {
-      const getData = (beers) => {
+      const getData = (beers: IBeers[]) => {
         return beers.map((beer) => ({
           beerName: beer.beer.beer_name,
           breweryName: beer.brewery.brewery_name,
@@ -87,7 +106,7 @@ const BeerTable = ({ beers, isLoading, user }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns: tableColumns, data }, useSortBy);
 
-  const openInNewTab = (id) => {
+  const openInNewTab = (id: number) => {
     const newWindow = window.open(
       `https://untappd.com/user/${user.user_name}/checkin/` + id,
       '_blank',
@@ -117,7 +136,12 @@ const BeerTable = ({ beers, isLoading, user }) => {
                 {headerGroup.headers.map((column) => (
                   <Th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    isNumeric={column.isNumeric}
+                    isNumeric={
+                      column.Header === 'User rating' ||
+                      column.Header === 'Global rating'
+                        ? true
+                        : false
+                    }
                   >
                     {column.render('Header')}
                     <chakra.span>
@@ -148,7 +172,12 @@ const BeerTable = ({ beers, isLoading, user }) => {
                   {row.cells.map((cell) => (
                     <Td
                       {...cell.getCellProps()}
-                      isNumeric={cell.column.isNumeric}
+                      isNumeric={
+                        cell.column.Header === 'User rating' ||
+                        cell.column.Header === 'Global rating'
+                          ? true
+                          : false
+                      }
                     >
                       {cell.render('Cell')}
                     </Td>

@@ -2,16 +2,29 @@ import React, { memo, useState, useEffect } from 'react';
 import { Flex, Heading } from '@chakra-ui/layout';
 import { Select, Button, Switch } from '@chakra-ui/react';
 import TopList from './TopList/TopList';
+import { IBeers } from '../types/IBeers';
 
-const TopStyles = ({ beers, isLoading }) => {
+interface TopStylesProps {
+  beers: IBeers[];
+  isLoading: boolean;
+}
+
+interface Styles {
+  name: string;
+  sumRating: number;
+  avgRating: number;
+  count: number;
+}
+
+const TopStyles: React.FC<TopStylesProps> = ({ beers, isLoading }) => {
   const [filter, setFilter] = useState('count');
   const [isCompact, setIsCompact] = useState(true);
-  const [styles, setStyles] = useState([]);
+  const [styles, setStyles] = useState<Styles[]>([]);
   const [isFull, setIsFull] = useState(true);
 
   const showButton = !isLoading && isCompact && styles.length > 5;
 
-  const handleSelect = e => {
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilter(e.target.value);
     e.target.value === 'count'
       ? setStyles(
@@ -28,11 +41,11 @@ const TopStyles = ({ beers, isLoading }) => {
   const handleIsCompact = () => {
     setIsCompact(false);
   };
-  const handleIsFull = e => {
+  const handleIsFull = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsFull(e.target.checked);
     const style = Object.values(
       beers
-        .map(beer => {
+        .map((beer) => {
           return {
             name: e.target.checked
               ? beer.beer.beer_style
@@ -40,21 +53,26 @@ const TopStyles = ({ beers, isLoading }) => {
             rating: beer.rating_score,
           };
         })
-        .reduce((obj, { name, rating }) => {
-          if (obj[name] === undefined)
-            obj[name] = {
-              name: name,
-              sumRating: rating,
-              avgRating: rating,
-              count: 1,
-            };
-          else {
-            obj[name].count++;
-            obj[name].sumRating += rating;
-            obj[name].avgRating = obj[name].sumRating / obj[name].count;
+        .reduce(
+          (obj, { name, rating }) => {
+            if (obj[name] === undefined)
+              obj[name] = {
+                name: name,
+                sumRating: rating,
+                avgRating: rating,
+                count: 1,
+              };
+            else {
+              obj[name].count++;
+              obj[name].sumRating += rating;
+              obj[name].avgRating = obj[name].sumRating / obj[name].count;
+            }
+            return obj;
+          },
+          {} as {
+            [index: string]: Styles;
           }
-          return obj;
-        }, {})
+        )
     );
     filter === 'count'
       ? setStyles(
@@ -75,27 +93,32 @@ const TopStyles = ({ beers, isLoading }) => {
     if (beers) {
       const styles = Object.values(
         beers
-          .map(beer => {
+          .map((beer) => {
             return {
               name: beer.beer.beer_style,
               rating: beer.rating_score,
             };
           })
-          .reduce((obj, { name, rating }) => {
-            if (obj[name] === undefined)
-              obj[name] = {
-                name: name,
-                sumRating: rating,
-                avgRating: rating,
-                count: 1,
-              };
-            else {
-              obj[name].count++;
-              obj[name].sumRating += rating;
-              obj[name].avgRating = obj[name].sumRating / obj[name].count;
+          .reduce(
+            (obj, { name, rating }) => {
+              if (obj[name] === undefined)
+                obj[name] = {
+                  name: name,
+                  sumRating: rating,
+                  avgRating: rating,
+                  count: 1,
+                };
+              else {
+                obj[name].count++;
+                obj[name].sumRating += rating;
+                obj[name].avgRating = obj[name].sumRating / obj[name].count;
+              }
+              return obj;
+            },
+            {} as {
+              [index: string]: Styles;
             }
-            return obj;
-          }, {})
+          )
       );
       setStyles(
         styles.sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
@@ -105,16 +128,16 @@ const TopStyles = ({ beers, isLoading }) => {
 
   return (
     <Flex
-      bgColor="white"
+      bgColor='white'
       p={2}
-      shadow="base"
-      flexDirection="column"
+      shadow='base'
+      flexDirection='column'
       width={['100%', '49%']}
       marginTop={4}
-      borderRadius="base"
+      borderRadius='base'
     >
-      <Flex justifyContent="space-between" alignItems="center" marginBottom={2}>
-        <Heading size="sm">Top Styles</Heading>
+      <Flex justifyContent='space-between' alignItems='center' marginBottom={2}>
+        <Heading size='sm'>Top Styles</Heading>
         <Switch
           isDisabled={isLoading}
           isChecked={isFull}
@@ -122,14 +145,14 @@ const TopStyles = ({ beers, isLoading }) => {
         />
         <Select
           maxW={28}
-          size="xs"
-          variant="filled"
+          size='xs'
+          variant='filled'
           onChange={handleSelect}
           value={filter}
           disabled={isLoading}
         >
-          <option value="count">By Count</option>
-          <option value="rating">By Rating</option>
+          <option value='count'>By Count</option>
+          <option value='rating'>By Rating</option>
         </Select>
       </Flex>
       <TopList
@@ -141,11 +164,11 @@ const TopStyles = ({ beers, isLoading }) => {
       {showButton && (
         <Button
           onClick={handleIsCompact}
-          size="xs"
-          alignSelf="center"
+          size='xs'
+          alignSelf='center'
           width={24}
-          variant="outline"
-          mt="auto"
+          variant='outline'
+          mt='auto'
         >
           Load more
         </Button>

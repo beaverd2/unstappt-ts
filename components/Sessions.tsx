@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import dayjs from 'dayjs';
 import { Flex, Heading } from '@chakra-ui/layout';
 import React, { memo, useState, useEffect } from 'react';
@@ -5,17 +6,33 @@ import { Skeleton } from '@chakra-ui/react';
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { useTable, useSortBy } from 'react-table';
 import { Table, Thead, Tbody, Tr, Th, Td, chakra } from '@chakra-ui/react';
+import { IBeers } from '../types/IBeers';
 
-const Sessions = ({ beers, isLoading }) => {
-  const [sessions, setSessions] = useState([]);
+interface SessionsProps {
+  beers: IBeers[];
+  isLoading: boolean;
+}
+
+interface ISessions {
+  startTime: string;
+  endTime: string;
+  total: number;
+}
+
+type Data = {
+  [index: string]: string[];
+};
+
+const Sessions: React.FC<SessionsProps> = ({ beers, isLoading }) => {
+  const [sessions, setSessions] = useState<ISessions[]>([]);
 
   useEffect(() => {
     if (beers) {
-      const getSessions = beers => {
+      const getSessions = (beers: IBeers[]) => {
         const sortedArray = beers
           .sort((a, b) => a.recent_checkin_id - b.recent_checkin_id)
-          .map(beer => beer.recent_created_at);
-        let data = {};
+          .map((beer) => beer.recent_created_at);
+        let data: Data = {};
         let counter = 0;
         for (let i = 0; i < sortedArray.length - 1; i++) {
           if (
@@ -30,11 +47,10 @@ const Sessions = ({ beers, isLoading }) => {
         Object.entries(data).forEach(([key, value]) => {
           data[key] = [...new Set(value)];
         });
-
         const filteredByValue = Object.fromEntries(
           Object.entries(data).filter(([key, value]) => value.length > 2)
         );
-        return Object.values(filteredByValue).map(session => ({
+        return Object.values(filteredByValue).map((session) => ({
           startTime: dayjs(session[0]).format('DD MMM YYYY HH:mm'),
           endTime: dayjs(session[session.length - 1]).format(
             'DD MMM YYYY HH:mm'
@@ -74,47 +90,46 @@ const Sessions = ({ beers, isLoading }) => {
   const tableColumns = React.useMemo(
     () =>
       isLoading
-        ? columns.map(column => ({
+        ? columns.map((column) => ({
             ...column,
-            Cell: <Skeleton h={4} w="100%" />,
+            Cell: <Skeleton h={4} w='100%' />,
           }))
         : columns,
     [isLoading, columns]
   );
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns: tableColumns, data }, useSortBy);
-
   return (
     <Flex
-      bgColor="white"
+      bgColor='white'
       p={2}
-      shadow="base"
-      flexDirection="column"
-      mx="auto"
-      width="100%"
+      shadow='base'
+      flexDirection='column'
+      mx='auto'
+      width='100%'
       marginTop={4}
-      borderRadius="base"
+      borderRadius='base'
     >
-      <Flex justifyContent="space-between" alignItems="center" marginBottom={2}>
-        <Heading size="sm">Drinking Sessions</Heading>
+      <Flex justifyContent='space-between' alignItems='center' marginBottom={2}>
+        <Heading size='sm'>Drinking Sessions</Heading>
       </Flex>
       <Flex>
-        <Table size="sm" {...getTableProps()}>
+        <Table size='sm' {...getTableProps()}>
           <Thead>
-            {headerGroups.map(headerGroup => (
+            {headerGroups.map((headerGroup) => (
               <Tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
+                {headerGroup.headers.map((column) => (
                   <Th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    isNumeric={column.isNumeric}
+                    isNumeric={column.Header === 'Total drinks' ? true : false}
                   >
                     {column.render('Header')}
                     <chakra.span>
                       {column.isSorted ? (
                         column.isSortedDesc ? (
-                          <TriangleDownIcon aria-label="sorted descending" />
+                          <TriangleDownIcon aria-label='sorted descending' />
                         ) : (
-                          <TriangleUpIcon aria-label="sorted ascending" />
+                          <TriangleUpIcon aria-label='sorted ascending' />
                         )
                       ) : null}
                     </chakra.span>
@@ -124,14 +139,16 @@ const Sessions = ({ beers, isLoading }) => {
             ))}
           </Thead>
           <Tbody {...getTableBodyProps()}>
-            {rows.map(row => {
+            {rows.map((row, i) => {
               prepareRow(row);
               return (
                 <Tr {...row.getRowProps()}>
-                  {row.cells.map(cell => (
+                  {row.cells.map((cell, i) => (
                     <Td
                       {...cell.getCellProps()}
-                      isNumeric={cell.column.isNumeric}
+                      isNumeric={
+                        cell.column.Header === 'Total drinks' ? true : false
+                      }
                     >
                       {cell.render('Cell')}
                     </Td>

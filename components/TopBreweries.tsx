@@ -2,15 +2,31 @@ import React, { memo, useState, useEffect } from 'react';
 import { Flex, Heading } from '@chakra-ui/layout';
 import { Select, Button } from '@chakra-ui/react';
 import TopList from './TopList/TopList';
+import { IBeers } from '../types/IBeers';
 
-const TopBreweries = ({ beers, isLoading }) => {
+interface TopBreweriesProps {
+  beers: IBeers[];
+  isLoading: boolean;
+}
+
+interface Breweries {
+  name: string;
+  name2: string;
+  img: string;
+  url: string;
+  sumRating: number;
+  avgRating: number;
+  count: number;
+}
+
+const TopBreweries: React.FC<TopBreweriesProps> = ({ beers, isLoading }) => {
   const [filter, setFilter] = useState('count');
   const [isCompact, setIsCompact] = useState(true);
-  const [breweries, setBreweries] = useState([]);
+  const [breweries, setBreweries] = useState<Breweries[]>([]);
 
   const showButton = !isLoading && isCompact && breweries.length > 5;
 
-  const handleSelect = e => {
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilter(e.target.value);
     e.target.value === 'count'
       ? setBreweries(
@@ -32,9 +48,9 @@ const TopBreweries = ({ beers, isLoading }) => {
     setIsCompact(true);
     setFilter('count');
     if (beers) {
-      const breweries = Object.values(
+      const breweries: Breweries[] = Object.values(
         beers
-          .map(beer => {
+          .map((beer) => {
             return {
               name: beer.brewery.brewery_name,
               name2: beer.brewery.country_name,
@@ -43,24 +59,29 @@ const TopBreweries = ({ beers, isLoading }) => {
               rating: beer.rating_score,
             };
           })
-          .reduce((obj, { name, img, rating, url, name2 }) => {
-            if (obj[name] === undefined)
-              obj[name] = {
-                name: name,
-                name2: name2,
-                img: img,
-                url: url,
-                sumRating: rating,
-                avgRating: rating,
-                count: 1,
-              };
-            else {
-              obj[name].count++;
-              obj[name].sumRating += rating;
-              obj[name].avgRating = obj[name].sumRating / obj[name].count;
+          .reduce(
+            (obj, { name, img, rating, url, name2 }) => {
+              if (obj[name] === undefined)
+                obj[name] = {
+                  name: name,
+                  name2: name2,
+                  img: img,
+                  url: url,
+                  sumRating: rating,
+                  avgRating: rating,
+                  count: 1,
+                };
+              else {
+                obj[name].count++;
+                obj[name].sumRating += rating;
+                obj[name].avgRating = obj[name].sumRating / obj[name].count;
+              }
+              return obj;
+            },
+            {} as {
+              [index: string]: Breweries;
             }
-            return obj;
-          }, {})
+          )
       );
 
       setBreweries(
@@ -73,26 +94,26 @@ const TopBreweries = ({ beers, isLoading }) => {
 
   return (
     <Flex
-      bgColor="white"
+      bgColor='white'
       p={2}
-      shadow="base"
-      flexDirection="column"
+      shadow='base'
+      flexDirection='column'
       width={['100%', '49%']}
       marginTop={4}
-      borderRadius="base"
+      borderRadius='base'
     >
-      <Flex justifyContent="space-between" alignItems="center" marginBottom={2}>
-        <Heading size="sm">Top Breweries</Heading>
+      <Flex justifyContent='space-between' alignItems='center' marginBottom={2}>
+        <Heading size='sm'>Top Breweries</Heading>
         <Select
           maxW={28}
-          size="xs"
-          variant="filled"
+          size='xs'
+          variant='filled'
           onChange={handleSelect}
           value={filter}
           disabled={isLoading}
         >
-          <option value="count">By Count</option>
-          <option value="rating">By Rating</option>
+          <option value='count'>By Count</option>
+          <option value='rating'>By Rating</option>
         </Select>
       </Flex>
       <TopList
@@ -105,11 +126,11 @@ const TopBreweries = ({ beers, isLoading }) => {
       {showButton && (
         <Button
           onClick={handleIsCompact}
-          size="xs"
-          alignSelf="center"
+          size='xs'
+          alignSelf='center'
           width={24}
-          variant="outline"
-          mt="auto"
+          variant='outline'
+          mt='auto'
         >
           Load more
         </Button>

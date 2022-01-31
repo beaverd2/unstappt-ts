@@ -2,29 +2,32 @@ import { Box, Flex, Heading } from '@chakra-ui/layout';
 import { Container, Input } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
-const Header = ({ fetchAll }) => {
+interface HeaderProps {
+  fetchAll: (username: string) => Promise<void>;
+}
+
+const Header: React.FC<HeaderProps> = ({ fetchAll }) => {
   const [search, setSearch] = useState('');
-  const handleInput = e => {
-    e.preventDefault();
-    setSearch(e.target.value);
+  const handleInput = (e: React.SyntheticEvent<EventTarget>) => {
+    setSearch((e.target as HTMLInputElement).value);
   };
-  const handleSubmit = e => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     fetchAll(search);
     setSearch('');
   };
   return (
-    <Box bgColor="#FFBA2E" w="100%">
+    <Box bgColor='#FFBA2E' w='100%'>
       <Container maxW={['container.sm', 'container.md', 'container.lg']}>
-        <Flex height={12} alignItems="center" justifyContent="space-between">
+        <Flex height={12} alignItems='center' justifyContent='space-between'>
           <Heading>Unstappt</Heading>
           <form onSubmit={handleSubmit}>
             <Input
-              placeholder="username"
-              size="xs"
-              bgColor="white"
+              placeholder='username'
+              size='xs'
+              bgColor='white'
               maxW={36}
-              borderRadius="md"
+              borderRadius='md'
               value={search}
               onChange={handleInput}
             />

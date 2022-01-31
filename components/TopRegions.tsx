@@ -2,15 +2,28 @@ import React, { memo, useState, useEffect } from 'react';
 import { Flex, Heading } from '@chakra-ui/layout';
 import { Select, Button } from '@chakra-ui/react';
 import TopList from './TopList/TopList';
+import { IBeers } from '../types/IBeers';
 
-const TopRegions = ({ beers, isLoading }) => {
+interface TopRegionsProps {
+  beers: IBeers[];
+  isLoading: boolean;
+}
+
+interface Regions {
+  name: string;
+  sumRating: number;
+  avgRating: number;
+  count: number;
+}
+
+const TopRegions: React.FC<TopRegionsProps> = ({ beers, isLoading }) => {
   const [filter, setFilter] = useState('count');
   const [isCompact, setIsCompact] = useState(true);
-  const [regions, setRegions] = useState([]);
+  const [regions, setRegions] = useState<Regions[]>([]);
 
   const showButton = !isLoading && isCompact && regions.length > 5;
 
-  const handleSelect = e => {
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilter(e.target.value);
     e.target.value === 'count'
       ? setRegions(
@@ -33,7 +46,7 @@ const TopRegions = ({ beers, isLoading }) => {
     if (beers) {
       const regions = Object.values(
         beers
-          .map(beer => {
+          .map((beer) => {
             return {
               name:
                 beer.brewery.location.brewery_state === ''
@@ -42,21 +55,26 @@ const TopRegions = ({ beers, isLoading }) => {
               rating: beer.rating_score,
             };
           })
-          .reduce((obj, { name, rating }) => {
-            if (obj[name] === undefined)
-              obj[name] = {
-                name: name,
-                sumRating: rating,
-                avgRating: rating,
-                count: 1,
-              };
-            else {
-              obj[name].count++;
-              obj[name].sumRating += rating;
-              obj[name].avgRating = obj[name].sumRating / obj[name].count;
+          .reduce(
+            (obj, { name, rating }) => {
+              if (obj[name] === undefined)
+                obj[name] = {
+                  name: name,
+                  sumRating: rating,
+                  avgRating: rating,
+                  count: 1,
+                };
+              else {
+                obj[name].count++;
+                obj[name].sumRating += rating;
+                obj[name].avgRating = obj[name].sumRating / obj[name].count;
+              }
+              return obj;
+            },
+            {} as {
+              [index: string]: Regions;
             }
-            return obj;
-          }, {})
+          )
       );
       setRegions(
         regions.sort(
@@ -67,26 +85,26 @@ const TopRegions = ({ beers, isLoading }) => {
   }, [beers]);
   return (
     <Flex
-      bgColor="white"
+      bgColor='white'
       p={2}
-      shadow="base"
-      flexDirection="column"
-      width="100%"
+      shadow='base'
+      flexDirection='column'
+      width='100%'
       marginTop={4}
-      borderRadius="base"
+      borderRadius='base'
     >
-      <Flex justifyContent="space-between" alignItems="center" marginBottom={2}>
-        <Heading size="sm">Top Regions/States</Heading>
+      <Flex justifyContent='space-between' alignItems='center' marginBottom={2}>
+        <Heading size='sm'>Top Regions/States</Heading>
         <Select
           maxW={28}
-          size="xs"
-          variant="filled"
+          size='xs'
+          variant='filled'
           onChange={handleSelect}
           value={filter}
           disabled={isLoading}
         >
-          <option value="count">By Count</option>
-          <option value="rating">By Rating</option>
+          <option value='count'>By Count</option>
+          <option value='rating'>By Rating</option>
         </Select>
       </Flex>
       <TopList
@@ -95,13 +113,13 @@ const TopRegions = ({ beers, isLoading }) => {
         isCompact={isCompact}
         filter={filter}
       />
-      {showButton > 5 && (
+      {showButton && (
         <Button
           onClick={handleIsCompact}
-          size="xs"
-          alignSelf="center"
+          size='xs'
+          alignSelf='center'
           width={24}
-          variant="outline"
+          variant='outline'
         >
           Load more
         </Button>
