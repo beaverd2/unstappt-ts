@@ -1,5 +1,5 @@
 import { IBeers } from '../../../types/IBeers';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type ErrorMessage = {
@@ -33,6 +33,7 @@ export default async function fetchUser(
     const beers: IBeers[] = response.data.response;
     res.status(200).json(beers);
   } catch (error) {
-    res.status(200).json({ error: 'something went wrong' });
+    const err = error as AxiosError;
+    res.status(200).json({ error: err.response?.data.meta.error_detail });
   }
 }
