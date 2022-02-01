@@ -13,14 +13,16 @@ export default async function fetchUser(
   const {
     query: { username },
   } = req;
-
+  if (!username) {
+    res.status(200).json({ error: 'type username' });
+  }
   try {
     const response = await axios.get(
       `https://api.untappd.com/v4/user/info/${username}?`,
       {
         params: {
-          client_id: process.env.NEXT_PUBLIC_CLIENT_ID,
-          client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
+          client_id: process.env.CLIENT_ID,
+          client_secret: process.env.CLIENT_SECRET,
         },
       }
     );

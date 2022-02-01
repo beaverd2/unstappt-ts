@@ -13,6 +13,9 @@ export default async function fetchUser(
   const {
     query: { username, start_date, end_date, offset = 0 },
   } = req;
+  if (!username) {
+    res.status(200).json({ error: 'type username' });
+  }
   try {
     const response = await axios.get(
       `https://api.untappd.com/v4/user/beers/` + username,
@@ -22,8 +25,8 @@ export default async function fetchUser(
           start_date,
           end_date,
           offset,
-          client_id: process.env.NEXT_PUBLIC_CLIENT_ID,
-          client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
+          client_id: process.env.CLIENT_ID,
+          client_secret: process.env.CLIENT_SECRET,
         },
       }
     );

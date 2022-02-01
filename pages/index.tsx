@@ -6,7 +6,7 @@ import { createStandaloneToast } from '@chakra-ui/toast';
 import Header from '../components/Header';
 import User from '../components/User';
 import DrinkingPattern from '../components/DrinkingPattern';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import TopBeers from '../components/TopBeers';
 import TopRegions from '../components/TopRegions';
 import TopStyles from '../components/TopStyles';
@@ -35,7 +35,6 @@ const Home: NextPage = () => {
   const [startDate, setStartDate] = useState(dayjs().subtract(7, 'days'));
   const [endDate, setEndDate] = useState(dayjs());
   const [isLoading, setIsLoading] = useState(false);
-  // const auth = `&client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&client_secret=${process.env.NEXT_PUBLIC_CLIENT_SECRET}`;
 
   const fetchBeers = async (url: string): Promise<IBeers[] | ErrorMessage> => {
     setIsLoading(true);
@@ -59,34 +58,6 @@ const Home: NextPage = () => {
       return beers;
     }
   };
-  // const fetchBeers = async (url: string): Promise<IBeers[] | ErrorMessage> => {
-  //   setIsLoading(true);
-  //   const fullUrl = url + auth;
-  //   try {
-  //     const response = await axios.get(fullUrl);
-  //     const data = response.data.response;
-  //     const beers = data.beers.items;
-  //     if (data.total_count > 50) {
-  //       let endpoints = [
-  //         ...Array(Math.floor(data.total_count / 50)).keys(),
-  //       ].map((key) => fullUrl + '&offset=' + (key + 1) * 50);
-  //       const allResponses = await axios.all(
-  //         endpoints.map((endpoint) => axios.get(endpoint))
-  //       );
-  //       const allBeers = allResponses
-  //         .map((response) => response.data.response.beers.items)
-  //         .reduce((a, b) => a.concat(b), []);
-  //       return beers.concat(allBeers);
-  //     } else {
-  //       return beers;
-  //     }
-  //   } catch (error) {
-  //     const err = error as AxiosError;
-  //     return { error: err.response?.data.meta.error_detail };
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
 
   const fetchUser = async (username: string): Promise<IUser | ErrorMessage> => {
     setIsLoading(true);
