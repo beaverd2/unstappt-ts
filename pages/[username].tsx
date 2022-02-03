@@ -3,7 +3,6 @@ import Head from 'next/head';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Flex, Container, Center, Link } from '@chakra-ui/react';
 import { createStandaloneToast } from '@chakra-ui/toast';
-import Header from '../components/Header';
 import User from '../components/User';
 import DrinkingPattern from '../components/DrinkingPattern';
 import axios from 'axios';

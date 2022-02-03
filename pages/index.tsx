@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Flex, Center, Link } from '@chakra-ui/react';
-import Header from '../components/Header';
 
 const Home: NextPage = () => {
   return (
