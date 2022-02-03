@@ -7,13 +7,10 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface DatePickerContainerProps {
-  fetchBeersForRange: (
-    startDate: dayjs.Dayjs,
-    endDate: dayjs.Dayjs
-  ) => Promise<void>;
+  fetchBeersForRange: (startDate: Date, endDate: Date) => Promise<void>;
   isLoading: boolean;
-  startDate: dayjs.Dayjs;
-  endDate: dayjs.Dayjs;
+  startDate: Date;
+  endDate: Date;
 }
 
 const DatePickerContainer: React.FC<DatePickerContainerProps> = ({
@@ -22,8 +19,8 @@ const DatePickerContainer: React.FC<DatePickerContainerProps> = ({
   startDate: startDateProp,
   endDate: endDateProp,
 }) => {
-  const [startDate, setStartDate] = useState(startDateProp);
-  const [endDate, setEndDate] = useState(endDateProp);
+  const [startDate, setStartDate] = useState<Date | null>(startDateProp);
+  const [endDate, setEndDate] = useState<Date | null>(endDateProp);
   const onChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
     setStartDate(start);
@@ -39,17 +36,26 @@ const DatePickerContainer: React.FC<DatePickerContainerProps> = ({
     }
   }, [startDateProp, endDateProp]);
 
-  const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-    <Button
-      onClick={onClick}
-      ref={ref}
-      variant='outline'
-      bg='white'
-      width='100%'
-    >
-      {value}
-    </Button>
-  ));
+  const CustomInput = forwardRef(
+    (
+      { value, onClick }: { value?: any; onClick?: any },
+      ref: React.Ref<any>
+    ) => {
+      return (
+        <Button
+          onClick={onClick}
+          ref={ref}
+          variant='outline'
+          bg='white'
+          width='100%'
+        >
+          {value}
+        </Button>
+      );
+    }
+  );
+
+  CustomInput.displayName = 'MyComponent';
 
   return (
     <Flex mb={2}>
@@ -65,8 +71,7 @@ const DatePickerContainer: React.FC<DatePickerContainerProps> = ({
           endDate={endDate}
           maxDate={new Date()}
           selectsRange
-          openToDate={endDate}
-          customInput={<ExampleCustomInput />}
+          customInput={<CustomInput />}
         />
       )}
     </Flex>

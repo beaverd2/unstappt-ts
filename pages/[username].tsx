@@ -97,10 +97,7 @@ const Home: NextPage = () => {
     [router]
   );
 
-  const fetchBeersForRange = async (
-    startDate: dayjs.Dayjs,
-    endDate: dayjs.Dayjs
-  ) => {
+  const fetchBeersForRange = async (startDate: Date, endDate: Date) => {
     if (!user) {
       Notification('no user');
     }
@@ -116,8 +113,8 @@ const Home: NextPage = () => {
       }
       if (!('error' in allBeersData)) {
         console.log('allBeersData', allBeersData);
-        setStartDate(startDate);
-        setEndDate(endDate);
+        setStartDate(dayjs(startDate));
+        setEndDate(dayjs(endDate));
         setBeers(allBeersData as IBeers[]);
       }
     }
@@ -162,8 +159,8 @@ const Home: NextPage = () => {
               <DatePickerContainer
                 fetchBeersForRange={fetchBeersForRange}
                 isLoading={isLoading}
-                startDate={startDate.$d}
-                endDate={endDate.$d}
+                startDate={startDate.toDate()}
+                endDate={endDate.toDate()}
               />
               <Statistics beers={beers} isLoading={isLoading} />
               <ActivityContainer
