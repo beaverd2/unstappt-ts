@@ -9,7 +9,12 @@ const Home: NextPage = () => {
       <Head>
         <title>Unstappt</title>
       </Head>
-      <Flex bg='gray.100' flexDir='column' flexWrap='wrap' minH='100vh'>
+      <Flex
+        bg='gray.100'
+        flexDir='column'
+        flexWrap='wrap'
+        minH='calc(100vh - 3rem)'
+      >
         <Center py={4} mt='auto'>
           Author:&nbsp;
           <Link
