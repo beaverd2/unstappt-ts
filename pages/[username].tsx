@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Flex, Container, Center, Link } from '@chakra-ui/react';
 import { createStandaloneToast } from '@chakra-ui/toast';
 import Header from '../components/Header';
@@ -68,32 +68,35 @@ const Home: NextPage = () => {
     return response.data;
   };
 
-  const fetchAll = async (username: string) => {
-    const now = dayjs();
-    const weekAgo = dayjs().subtract(7, 'days');
-    const userData = await fetchUser(username);
-    if ('error' in userData) {
-      Notification(userData.error);
-      router.push({
-        pathname: `/`,
-      });
-      return;
-    }
-    const allBeersData = await fetchBeers(
-      `${username}?start_date=${weekAgo.format(
-        'YYYY-MM-DD'
-      )}&end_date=${now.format('YYYY-MM-DD')}`
-    );
-    if ('error' in allBeersData) {
-      Notification(allBeersData.error);
-    }
-    if (!('error' in userData) && !('error' in allBeersData)) {
-      setStartDate(weekAgo);
-      setEndDate(now);
-      setUser(userData as IUser);
-      setBeers(allBeersData as IBeers[]);
-    }
-  };
+  const fetchAll = useCallback(
+    async (username: string) => {
+      const now = dayjs();
+      const weekAgo = dayjs().subtract(7, 'days');
+      const userData = await fetchUser(username);
+      if ('error' in userData) {
+        Notification(userData.error);
+        router.push({
+          pathname: `/`,
+        });
+        return;
+      }
+      const allBeersData = await fetchBeers(
+        `${username}?start_date=${weekAgo.format(
+          'YYYY-MM-DD'
+        )}&end_date=${now.format('YYYY-MM-DD')}`
+      );
+      if ('error' in allBeersData) {
+        Notification(allBeersData.error);
+      }
+      if (!('error' in userData) && !('error' in allBeersData)) {
+        setStartDate(weekAgo);
+        setEndDate(now);
+        setUser(userData as IUser);
+        setBeers(allBeersData as IBeers[]);
+      }
+    },
+    [router]
+  );
 
   const fetchBeersForRange = async (
     startDate: dayjs.Dayjs,
@@ -140,7 +143,7 @@ const Home: NextPage = () => {
     if (typeof router.query.username === 'string') {
       fetchAll(router.query.username);
     }
-  }, [router.query.username]);
+  }, [router.query.username, fetchAll]);
 
   return (
     <div>
