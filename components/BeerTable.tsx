@@ -106,13 +106,15 @@ const BeerTable: React.FC<BeerTableProps> = ({ beers, isLoading, user }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns: tableColumns, data }, useSortBy);
 
-  const openInNewTab = (id: number) => {
-    const newWindow = window.open(
-      `https://untappd.com/user/${user.user_name}/checkin/` + id,
-      '_blank',
-      'noopener,noreferrer'
-    );
-    if (newWindow) newWindow.opener = null;
+  const openInNewTab = (data: any) => {
+    if (user && data.id) {
+      const newWindow = window.open(
+        `https://untappd.com/user/${user.user_name}/checkin/` + data.id,
+        '_blank',
+        'noopener,noreferrer'
+      );
+      if (newWindow) newWindow.opener = null;
+    }
   };
 
   return (
@@ -167,7 +169,7 @@ const BeerTable: React.FC<BeerTableProps> = ({ beers, isLoading, user }) => {
                   _hover={{ bgColor: 'gray.100' }}
                   cursor='pointer'
                   {...row.getRowProps()}
-                  onClick={() => openInNewTab(row.original.id)}
+                  onClick={() => openInNewTab(row.original)}
                 >
                   {row.cells.map((cell) => (
                     <Td
