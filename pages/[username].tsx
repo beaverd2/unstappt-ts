@@ -38,7 +38,6 @@ const Home: NextPage = () => {
   const fetchBeers = async (url: string): Promise<IBeers[] | ErrorMessage> => {
     setIsLoading(true);
     const response = await axios.get(`api/beer/${url}`);
-    console.log('response beer', response);
     const data = response.data;
     const beers = data.beers.items;
     if (data.total_count > 50) {
@@ -62,7 +61,6 @@ const Home: NextPage = () => {
   const fetchUser = async (username: string): Promise<IUser | ErrorMessage> => {
     setIsLoading(true);
     const response = await axios.get(`api/user/${username}`);
-    console.log('response user', response);
     setIsLoading(false);
     return response.data;
   };
@@ -112,7 +110,6 @@ const Home: NextPage = () => {
         Notification(allBeersData.error);
       }
       if (!('error' in allBeersData)) {
-        console.log('allBeersData', allBeersData);
         setStartDate(dayjs(startDate));
         setEndDate(dayjs(endDate));
         setBeers(allBeersData as IBeers[]);
