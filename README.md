@@ -9,4 +9,4 @@ Check out [live demo](https://unstappt-ts.vercel.app/)\
 
 ## Description
 
-App was made using next.js, typescript, chakra-ui, react-chartjs-2, react-datepicker, react-table, dayjs, axios.
+App was made using next.js, typescript, chakra-ui, react-chartjs-2, react-datepicker, date-fns, axios.

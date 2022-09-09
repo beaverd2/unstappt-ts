@@ -1,203 +1,73 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import React, { useState, useEffect, useCallback } from 'react';
-import { Flex, Container, Center, Link } from '@chakra-ui/react';
-import { createStandaloneToast } from '@chakra-ui/toast';
-import User from '../components/User';
-import DrinkingPattern from '../components/DrinkingPattern';
-import axios from 'axios';
-import TopBeers from '../components/TopBeers';
-import TopRegions from '../components/TopRegions';
-import TopStyles from '../components/TopStyles';
-import dayjs from 'dayjs';
-import Statistics from '../components/Statistics';
-import DatePickerContainer from '../components/DatePickerContainer';
-import ActivityContainer from '../components/Activity/ActivityContainer';
-import Sessions from '../components/Sessions';
-import BeerTable from '../components/BeerTable';
-import TopCountries from '../components/TopCountries';
-import TopBreweries from '../components/TopBreweries';
+import type {NextPage} from 'next'
+import Head from 'next/head'
+import React, {useEffect} from 'react'
+import {Flex, Container} from '@chakra-ui/react'
+import {createStandaloneToast} from '@chakra-ui/toast'
+import {User} from 'components/user'
+import {DrinkingPattern} from 'components/drinking-pattern'
+import {TopBeers} from 'components/beers'
+import {TopRegions} from 'components/regions'
+import {TopStyles} from 'components/styles'
+import {Statistics} from 'components/statistics'
+import {DatePicker} from 'components/date-picker'
+import {Activity} from 'components/activity'
+import {SessionsTable} from 'components/sessions-table'
+import {CheckinsTable} from 'components/checkins-table'
+import {TopCountries} from 'components/countries'
+import {TopBreweries} from 'components/breweries'
+import {useRouter} from 'next/router'
+import {useFetch} from 'shared/api'
 
-import { IUser } from '../types/IUser';
-import { IBeers } from '../types/IBeers';
-import { useRouter } from 'next/router';
-
-type ErrorMessage = {
-  error: string;
-};
+const Notification = (message: string) => {
+  const toast = createStandaloneToast({})
+  toast({
+    title: 'Error',
+    description: message,
+    status: 'error',
+    duration: 3000,
+    position: 'top',
+    isClosable: true,
+  })
+}
 
 const Home: NextPage = () => {
-  const [beers, setBeers] = useState<IBeers[]>([]);
-  const [user, setUser] = useState<IUser>();
-  const [startDate, setStartDate] = useState(dayjs().subtract(7, 'days'));
-  const [endDate, setEndDate] = useState(dayjs());
-  const [isLoading, setIsLoading] = useState(false);
-
-  const router = useRouter();
-
-  const fetchBeers = async (url: string): Promise<IBeers[] | ErrorMessage> => {
-    setIsLoading(true);
-    const response = await axios.get(`api/beer/${url}`);
-    const data = response.data;
-    const beers = data.beers.items;
-    if (data.total_count > 50) {
-      let endpoints = [...Array(Math.floor(data.total_count / 50)).keys()].map(
-        (key) => 'api/beer/' + url + '&offset=' + (key + 1) * 50
-      );
-      const allResponses = await axios.all(
-        endpoints.map((endpoint) => axios.get(endpoint))
-      );
-      const allBeers = allResponses
-        .map((response) => response.data.beers.items)
-        .reduce((a, b) => a.concat(b), []);
-      setIsLoading(false);
-      return beers.concat(allBeers);
-    } else {
-      setIsLoading(false);
-      return beers;
-    }
-  };
-
-  const fetchUser = async (username: string): Promise<IUser | ErrorMessage> => {
-    setIsLoading(true);
-    const response = await axios.get(`api/user/${username}`);
-    setIsLoading(false);
-    return response.data;
-  };
-
-  const fetchAll = useCallback(
-    async (username: string) => {
-      const now = dayjs();
-      const weekAgo = dayjs().subtract(7, 'days');
-      const userData = await fetchUser(username);
-      if ('error' in userData) {
-        Notification(userData.error);
-        router.push({
-          pathname: `/`,
-        });
-        return;
-      }
-      const allBeersData = await fetchBeers(
-        `${username}?start_date=${weekAgo.format(
-          'YYYY-MM-DD'
-        )}&end_date=${now.format('YYYY-MM-DD')}`
-      );
-      if ('error' in allBeersData) {
-        Notification(allBeersData.error);
-      }
-      if (!('error' in userData) && !('error' in allBeersData)) {
-        setStartDate(weekAgo);
-        setEndDate(now);
-        setUser(userData as IUser);
-        setBeers(allBeersData as IBeers[]);
-      }
-    },
-    [router]
-  );
-
-  const fetchBeersForRange = async (startDate: Date, endDate: Date) => {
-    if (!user) {
-      Notification('no user');
-    }
-    if (user) {
-      const allBeersData = await fetchBeers(
-        `${user.user_name}?start_date=${dayjs(startDate).format(
-          'YYYY-MM-DD'
-        )}&end_date=${dayjs(endDate).format('YYYY-MM-DD')}`
-      );
-
-      if ('error' in allBeersData) {
-        Notification(allBeersData.error);
-      }
-      if (!('error' in allBeersData)) {
-        setStartDate(dayjs(startDate));
-        setEndDate(dayjs(endDate));
-        setBeers(allBeersData as IBeers[]);
-      }
-    }
-  };
-
-  const Notification = (message: string) => {
-    const toast = createStandaloneToast({});
-
-    toast({
-      title: 'Error',
-      description: message,
-      status: 'error',
-      duration: 3000,
-      position: 'top',
-      isClosable: true,
-    });
-
-    return <></>;
-  };
+  const [data, user, startDate, endDate, isLoading, error, fetchBeersForRange] = useFetch()
+  const router = useRouter()
 
   useEffect(() => {
-    if (typeof router.query.username === 'string') {
-      fetchAll(router.query.username);
+    if (error) {
+      Notification(error)
     }
-  }, [router.query.username, fetchAll]);
+  }, [error])
 
   return (
-    <div>
+    <>
       <Head>
         <title>{router.query.username} on Unstappt </title>
       </Head>
-      <Flex
-        bg='gray.100'
-        flexDir='column'
-        flexWrap='wrap'
-        minH='calc(100vh - 3rem)'
-      >
-        {((beers && user) || isLoading) && (
-          <>
-            <Container maxW={['container.sm', 'container.md', 'container.lg']}>
-              <User isLoading={isLoading} user={user} />
-              <DatePickerContainer
-                fetchBeersForRange={fetchBeersForRange}
-                isLoading={isLoading}
-                startDate={startDate.toDate()}
-                endDate={endDate.toDate()}
-              />
-              <Statistics beers={beers} isLoading={isLoading} />
-              <ActivityContainer
-                isLoading={isLoading}
-                beers={beers}
-                startDate={startDate}
-                endDate={endDate}
-              />
-              <Flex
-                flexWrap='wrap'
-                justifyContent='space-between'
-                gridColumnGap={2}
-                alignItems='flex-start'
-              >
-                <TopBeers beersData={beers} isLoading={isLoading} />
-                <TopBreweries beers={beers} isLoading={isLoading} />
-                <TopStyles beers={beers} isLoading={isLoading} />
-                <TopCountries beers={beers} isLoading={isLoading} />
-                <TopRegions beers={beers} isLoading={isLoading} />
-              </Flex>
-              <DrinkingPattern beers={beers} isLoading={isLoading} />
-              <Sessions beers={beers} isLoading={isLoading} />
-              <BeerTable beers={beers} isLoading={isLoading} user={user} />
-            </Container>
-          </>
-        )}
-        <Center py={4} mt='auto'>
-          Author:&nbsp;
-          <Link
-            color='blue.400'
-            target='_blank'
-            rel='noopener noreferrer'
-            href='https://github.com/beaverd2'
-          >
-            beaverd2
-          </Link>
-        </Center>
-      </Flex>
-    </div>
-  );
-};
+      <Container maxW={['container.sm', 'container.md', 'container.lg']}>
+        <User isLoading={isLoading} user={user} />
+        <DatePicker
+          fetchBeersForRange={fetchBeersForRange}
+          isLoading={isLoading}
+          startDate={startDate}
+          endDate={endDate}
+        />
+        <Statistics beers={data.beers} isLoading={isLoading} />
+        <Activity isLoading={isLoading} beers={data.beers} startDate={startDate} endDate={endDate} />
+        <Flex flexWrap="wrap" justifyContent="space-between" gridColumnGap={2} alignItems="flex-start">
+          <TopBeers beers={data.beers} isLoading={isLoading} />
+          <TopBreweries breweries={data.breweries} isLoading={isLoading} />
+          <TopStyles styles={data.styles} isLoading={isLoading} />
+          <TopCountries countries={data.countries} isLoading={isLoading} />
+          <TopRegions regions={data.regions} isLoading={isLoading} />
+        </Flex>
+        <DrinkingPattern beers={data.beers} isLoading={isLoading} />
+        <SessionsTable beers={data.beers} isLoading={isLoading} />
+        <CheckinsTable beers={data.beers} isLoading={isLoading} username={user.username} />
+      </Container>
+    </>
+  )
+}
 
-export default Home;
+export default Home
