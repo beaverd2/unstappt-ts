@@ -1,22 +1,17 @@
 import { Block } from 'shared/ui/block'
-import { isValid, subDays } from 'date-fns'
 import { Chart } from './ui/chart'
 import { Beer } from 'shared/types/data'
-
-const today = new Date()
-const weekAgo = subDays(today, 7)
 
 type Props = {
   loading: boolean
   beers: Beer[]
-  startDate?: string
-  endDate?: string
+  range: {
+    startDate: Date
+    endDate: Date
+  }
 }
 
-export const Activity = ({ loading, beers, ...props }: Props) => {
-  const startDate = props.startDate && isValid(new Date(props.startDate)) ? new Date(props.startDate) : weekAgo
-  const endDate = props.endDate && isValid(new Date(props.endDate)) ? new Date(props.endDate) : today
-
+export const Activity = ({ loading, beers, range }: Props) => {
   return (
     <Block className="col-span-2">
       <div className="mb-2 flex h-[42px] items-center justify-between">
@@ -26,7 +21,7 @@ export const Activity = ({ loading, beers, ...props }: Props) => {
         {loading ? (
           <div className="h-[250px] animate-pulse bg-gray-300"></div>
         ) : (
-          <Chart beers={beers} startDate={startDate} endDate={endDate} />
+          <Chart beers={beers} startDate={range.startDate} endDate={range.endDate} />
         )}
       </div>
     </Block>

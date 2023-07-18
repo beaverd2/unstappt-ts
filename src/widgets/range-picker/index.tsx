@@ -1,54 +1,46 @@
-import { format, isValid, subDays } from 'date-fns'
-import { useRouter } from 'next/router'
-import React, { useEffect, useMemo, useState } from 'react'
+import { format } from 'date-fns'
+import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { ButtonInput } from './ui/button-input'
 import { IconButton } from 'shared/ui/icon-button'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 
+const today = new Date()
+
 interface DatePickerProps {
   loading: boolean
-  startDate: string
-  endDate: string
+  onChange: ({ startDate, endDate }: { startDate: Date; endDate: Date }) => void
+  range: { startDate: Date; endDate: Date }
 }
 
-const today = new Date()
-const weekAgo = subDays(today, 7)
+export const RangePicker = ({ loading, onChange, ...props }: DatePickerProps) => {
+  const [range, setRange] = useState<{ startDate: Date | null; endDate: Date | null }>({
+    startDate: props.range.startDate,
+    endDate: props.range.endDate,
+  })
 
-export const RangePicker = (props: DatePickerProps) => {
-  const startDate = useMemo(
-    () => (props.startDate && isValid(new Date(props.startDate)) ? new Date(props.startDate) : weekAgo),
-    [props.startDate]
-  )
-  const endDate = useMemo(
-    () => (props.endDate && isValid(new Date(props.endDate)) ? new Date(props.endDate) : today),
-    [props.endDate]
-  )
-  const [range, setRange] = useState<{ startDate: Date | null; endDate: Date | null }>({ startDate, endDate })
-  const router = useRouter()
-
-  const onChange = (dates: [Date | null, Date | null]) => {
-    const [start, end] = dates
+  const handleRange = (date: [Date | null, Date | null]) => {
+    const [start, end] = date
     setRange({ startDate: start, endDate: end })
     if (start && end) {
-      router.push({
-        query: { ...router.query, startDate: format(start, 'yyyy-MM-dd'), endDate: format(end, 'yyyy-MM-dd') },
-      })
+      onChange({ startDate: start, endDate: end })
     }
   }
+
   useEffect(() => {
-    if (startDate && endDate) {
-      setRange({ startDate, endDate })
-    }
-  }, [startDate, endDate])
+    setRange({
+      startDate: props.range.startDate,
+      endDate: props.range.endDate,
+    })
+  }, [props.range])
 
   return (
     <div className="col-span-2 mb-2 flex w-full">
       <DatePicker
-        disabled={props.loading}
+        disabled={loading}
         maxDate={today}
         selected={range.startDate}
-        onChange={onChange}
+        onChange={(date) => handleRange(date)}
         startDate={range.startDate}
         endDate={range.endDate}
         dateFormat="d MMMM yyyy"

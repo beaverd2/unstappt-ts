@@ -2,22 +2,20 @@ import { format, subDays } from 'date-fns'
 
 export const fetchUser = async (username: string) => {
   const queryParams = new URLSearchParams({
-    client_id: import.meta.env.VITE_CLIENT_ID,
-    client_secret: import.meta.env.VITE_CLIENT_SECRET,
+    client_id: process.env.CLIENT_ID ?? '',
+    client_secret: process.env.CLIENT_SECRET ?? '',
   })
   const url = `https://api.untappd.com/v4/user/info/${username}?${queryParams}`
 
   try {
     const response = await fetch(url)
-
     if (!response.ok) {
       throw new Error(response.statusText)
     }
-
     const data = await response.json()
     return data.response.user
   } catch (error) {
-    console.log(error)
+    throw error
   }
 }
 
@@ -37,8 +35,8 @@ export const fetchBeers = async ({ username, startDate, endDate, offset = 0 }: F
     start_date: startDate && endDate ? startDate : format(weekAgo, 'yyyy-MM-dd'),
     end_date: startDate && endDate ? endDate : format(today, 'yyyy-MM-dd'),
     offset: String(offset),
-    client_id: import.meta.env.VITE_CLIENT_ID,
-    client_secret: import.meta.env.VITE_CLIENT_SECRET,
+    client_id: process.env.CLIENT_ID ?? '',
+    client_secret: process.env.CLIENT_SECRET ?? '',
   })
 
   const url = `https://api.untappd.com/v4/user/beers/${username}?`

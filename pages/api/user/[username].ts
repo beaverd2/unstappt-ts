@@ -1,30 +1,23 @@
-import axios, { AxiosError } from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { fetchUser } from 'shared/api'
 import { UserData } from 'shared/types/requests'
 
 type ErrorMessage = {
   error: string
 }
 
-export default async function fetchUser(req: NextApiRequest, res: NextApiResponse<UserData | ErrorMessage>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<UserData | ErrorMessage>) {
   const {
     query: { username },
   } = req
   if (!username) {
-    res.status(200).json({ error: 'type username' })
+    res.status(500).json({ error: 'type username' })
   }
   try {
-    const url = encodeURI(`https://api.untappd.com/v4/user/info/${username}`)
-    const response = await axios.get(url, {
-      params: {
-        client_id: process.env.CLIENT_ID,
-        client_secret: process.env.CLIENT_SECRET,
-      },
-    })
-    const user: UserData = response.data.response.user
+    const user = await fetchUser(username as string)
     res.status(200).json(user)
-  } catch (error) {
-    const err = error as AxiosError
-    res.status(200).json({ error: err.response?.data.meta.error_detail })
+  } catch (error: any) {
+    const errorMessage = error?.message ?? 'Something went wrong'
+    res.status(500).json({ error: errorMessage })
   }
 }

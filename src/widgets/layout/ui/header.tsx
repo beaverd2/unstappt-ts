@@ -1,11 +1,9 @@
-import { format, subDays } from 'date-fns'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { ChangeEvent, FormEvent, useRef, useState } from 'react'
 
-const today = new Date()
-const weekAgo = subDays(today, 7)
-
 export const Header = () => {
+  const router = useRouter()
   const [username, setUsername] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -15,10 +13,7 @@ export const Header = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
-    const searchParams = new URLSearchParams()
-    searchParams.set('startDate', format(weekAgo, 'yyyy-MM-dd'))
-    searchParams.set('endDate', format(today, 'yyyy-MM-dd'))
-    // navigate(`${username}?${searchParams}`)
+    router.push(`/${username}`)
     setUsername('')
     if (inputRef.current) {
       inputRef.current?.blur()

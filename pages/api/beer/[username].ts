@@ -1,33 +1,23 @@
 import { BeerData } from 'shared/types/requests'
-import axios, { AxiosError } from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { fetchBeers } from 'shared/api'
 
 type ErrorMessage = {
   error: string
 }
 
-export default async function fetchUser(req: NextApiRequest, res: NextApiResponse<BeerData[] | ErrorMessage>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<BeerData[] | ErrorMessage>) {
   const {
-    query: { username, start_date, end_date, offset = 0 },
+    query: { username, startDate, endDate },
   } = req
   if (!username) {
-    res.status(200).json({ error: 'type username' })
+    res.status(500).json({ error: 'type username' })
   }
   try {
-    const response = await axios.get(`https://api.untappd.com/v4/user/beers/` + username, {
-      params: {
-        limit: 50,
-        start_date,
-        end_date,
-        offset,
-        client_id: process.env.CLIENT_ID,
-        client_secret: process.env.CLIENT_SECRET,
-      },
-    })
-    const beers: BeerData[] = response.data.response
+    const beers = await fetchBeers({ username, startDate, endDate })
     res.status(200).json(beers)
-  } catch (error) {
-    const err = error as AxiosError
-    res.status(200).json({ error: err.response?.data.meta.error_detail })
+  } catch (error: any) {
+    const errorMessage = error?.message ?? 'Something went wrong'
+    res.status(500).json({ error: errorMessage })
   }
 }
