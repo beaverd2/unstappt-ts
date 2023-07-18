@@ -1,4 +1,4 @@
-export interface Beer {
+export type Beer = {
   bid: number
   beer_name: string
   beer_label: string
@@ -13,7 +13,7 @@ export interface Beer {
   has_had: boolean
 }
 
-export interface Brewery {
+export type Brewery = {
   brewery_id: number
   brewery_name: string
   brewery_slug: string
@@ -26,21 +26,21 @@ export interface Brewery {
   brewery_active: number
 }
 
-export interface Contact {
+export type Contact = {
   twitter: string
   facebook: string
   instagram: string
   url: string
 }
 
-export interface Location {
+export type Location = {
   brewery_city: string
   brewery_state: string
   lat: number
   lng: number
 }
 
-export interface BeerData {
+export type BeerData = {
   first_checkin_id: number
   first_created_at: string
   recent_checkin_id: number
@@ -54,7 +54,7 @@ export interface BeerData {
   brewery: Brewery
 }
 
-export interface Stats {
+export type Stats = {
   total_badges: number
   total_friends: number
   total_checkins: number
@@ -64,7 +64,7 @@ export interface Stats {
   total_photos: number
 }
 
-export interface UserData {
+export type UserData = {
   uid: number
   id: number
   user_name: string

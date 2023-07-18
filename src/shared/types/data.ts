@@ -9,7 +9,7 @@ export type Beer = {
   globalRating: number
   count: number
   url: string
-  date: Date
+  date: string
 }
 export type Brewery = {
   name: string

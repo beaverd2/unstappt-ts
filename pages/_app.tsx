@@ -1,16 +1,13 @@
 import 'shared/styles/globals.css'
 import type {AppProps} from 'next/app'
-import {ChakraProvider} from '@chakra-ui/react'
-import {Layout} from 'shared/ui/layout'
+import {Layout} from 'widgets/layout'
 
-function MyApp({Component, pageProps}: AppProps) {
+function App({Component, pageProps}: AppProps) {
   return (
-    <ChakraProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ChakraProvider>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
   )
 }
 
-export default MyApp
+export default App

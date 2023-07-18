@@ -1,58 +1,87 @@
-import {Button, Flex, Heading} from '@chakra-ui/react'
-import React, {useEffect, useMemo, useState} from 'react'
+import {cn} from 'shared/lib/utils'
 import {Beer, Brewery, Country, Region, Style} from 'shared/types/data'
-import {filterSort} from 'shared/lib/filter-sort'
 import {Block} from '../block'
-import {FilterSelect} from '../filter-select'
-import {AnimatedList} from './animated-list'
+import {Item} from './ui/item'
+import {Button} from '../button'
+import {Select} from '../select'
+import {formatItem, getShortStyles, filterSort} from './lib'
+import {SkeletonList} from './ui/skeleton-list'
+import {useState} from 'react'
 
-interface ListProps {
+type Props = {
   data: Beer[] | Brewery[] | Country[] | Region[] | Style[]
-  title: string
-  isLoading: boolean
+  title?: string
+  loading?: boolean
+  img?: boolean
   filter?: boolean
-  width?: string[] | string
-  asLinks?: boolean
-  defaultFilterValue?: 'count' | 'rating'
+  links?: boolean
+  defaultFilter?: 'count' | 'rating'
+  className?: string
+  style?: boolean
 }
 
-export const List = ({data, title, isLoading, filter, defaultFilterValue = 'count', width, asLinks}: ListProps) => {
-  const [filterValue, setFilterValue] = useState<'count' | 'rating'>(defaultFilterValue)
-  const [isCompact, setIsCompact] = useState(true)
+export const List = ({
+  data,
+  title,
+  loading,
+  img,
+  filter = true,
+  links,
+  defaultFilter = 'count',
+  className,
+  style = false,
+}: Props) => {
+  const [filterValue, setFilter] = useState(defaultFilter)
+  const [showAll, setShowAll] = useState(false)
+  const [styleType, setStyleType] = useState<'full' | 'short'>('full')
+  const sortedData = filterSort(
+    styleType === 'short' ? getShortStyles(data as Style[]) : data,
+    filter ? filterValue : null
+  )
+  const items = showAll ? sortedData : sortedData.slice(0, 5)
 
-  const showButton = !isLoading && isCompact && data.length > 5
-
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilterValue(e.target.value as 'count' | 'rating')
+  const handleFilter = (e: any) => {
+    setFilter(e.target?.value)
   }
 
-  const handleIsCompact = () => {
-    setIsCompact(false)
+  const handleStyle = (e: any) => {
+    setStyleType(e.target?.value)
   }
-
-  useEffect(() => {
-    setIsCompact(true)
-    setFilterValue(defaultFilterValue)
-  }, [data, defaultFilterValue])
-
-  const sortedData = useMemo(() => filterSort(data, filter ? filterValue : null), [data, filterValue, filter])
 
   return (
-    <Block width={width}>
-      <Flex justifyContent="space-between" alignItems="center" marginBottom={2}>
-        <Heading size="sm">{title}</Heading>
-        {filter && <FilterSelect onChange={handleSelect} value={filterValue} disabled={isLoading} />}
-      </Flex>
-      <AnimatedList
-        data={isCompact ? sortedData.slice(0, 5) : sortedData}
-        isLoading={isLoading}
-        filter={filterValue}
-        asLinks={asLinks}
-      />
-      {showButton && (
-        <Button onClick={handleIsCompact} size="xs" alignSelf="center" width={24} variant="outline" mt="auto">
-          Show more
-        </Button>
+    <Block className={cn('col-span-2 self-start md:col-span-1', className)}>
+      <div className="mb-2 flex h-[42px] items-center justify-between">
+        {title && <p className="text-lg font-semibold">{title}</p>}
+        {style && (
+          <Select
+            value={styleType}
+            onChange={handleStyle}
+            options={[
+              {value: 'full', label: 'Full styles'},
+              {value: 'short', label: 'Short styles'},
+            ]}
+          />
+        )}
+        {filter && (
+          <Select
+            value={filterValue}
+            onChange={handleFilter}
+            options={[
+              {value: 'count', label: 'Count'},
+              {value: 'rating', label: 'Rating'},
+            ]}
+          />
+        )}
+      </div>
+      {loading ? (
+        <SkeletonList img={img} />
+      ) : (
+        items.map((item, index) => (
+          <Item key={item.name + index} item={formatItem(item)} filter={filterValue} link={links} />
+        ))
+      )}
+      {!showAll && !loading && items.length < sortedData.length && (
+        <Button onClick={() => setShowAll(true)}>Show more</Button>
       )}
     </Block>
   )

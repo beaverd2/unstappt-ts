@@ -1,26 +1,11 @@
-import {Flex} from '@chakra-ui/react'
-import React from 'react'
+import {ReactNode} from 'react'
+import {cn} from 'shared/lib/utils'
 
-interface BlockProps {
-  width?: string[] | string
-  display?: string
-  flexDirection?: 'column' | 'row'
-  children?: React.ReactNode
+type Props = {
+  className?: string
+  children: ReactNode
 }
 
-export const Block = ({width = '100', display = 'flex', flexDirection = 'column', children}: BlockProps) => {
-  return (
-    <Flex
-      bgColor="white"
-      p={2}
-      shadow="base"
-      flexDirection={flexDirection}
-      width={width}
-      marginTop={4}
-      borderRadius="base"
-      display={display}
-    >
-      {children}
-    </Flex>
-  )
+export const Block = ({className, children}: Props) => {
+  return <div className={cn('flex w-full flex-col rounded-md bg-white p-2 shadow-md', className)}>{children}</div>
 }
