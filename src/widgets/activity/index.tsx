@@ -1,7 +1,7 @@
-import {Block} from 'shared/ui/block'
-import {isValid, subDays} from 'date-fns'
-import {Chart} from './ui/chart'
-import {Beer} from 'shared/types/data'
+import { Block } from 'shared/ui/block'
+import { isValid, subDays } from 'date-fns'
+import { Chart } from './ui/chart'
+import { Beer } from 'shared/types/data'
 
 const today = new Date()
 const weekAgo = subDays(today, 7)
@@ -13,7 +13,7 @@ type Props = {
   endDate?: string
 }
 
-export const Activity = ({loading, beers, ...props}: Props) => {
+export const Activity = ({ loading, beers, ...props }: Props) => {
   const startDate = props.startDate && isValid(new Date(props.startDate)) ? new Date(props.startDate) : weekAgo
   const endDate = props.endDate && isValid(new Date(props.endDate)) ? new Date(props.endDate) : today
 

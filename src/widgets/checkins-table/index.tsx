@@ -1,7 +1,7 @@
-import {Block} from 'shared/ui/block'
-import {Table} from './ui/table'
-import {TableSkeleton} from './ui/table-skeleton'
-import {Beer} from 'shared/types/data'
+import { Block } from 'shared/ui/block'
+import { Table } from './ui/table'
+import { TableSkeleton } from './ui/table-skeleton'
+import { Beer } from 'shared/types/data'
 
 type Props = {
   loading: boolean
@@ -9,7 +9,7 @@ type Props = {
   username: string
 }
 
-export const CheckinsTable = ({loading, beers, username}: Props) => {
+export const CheckinsTable = ({ loading, beers, username }: Props) => {
   return (
     <Block className="col-span-2">
       <div className="mb-2 flex h-[42px] items-center justify-between">

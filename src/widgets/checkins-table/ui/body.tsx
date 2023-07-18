@@ -1,6 +1,6 @@
-import {TableData} from '../model'
-import {format} from 'date-fns'
-import {TableBody, TableCell, TableRow} from 'shared/ui/table'
+import { TableData } from '../model'
+import { format } from 'date-fns'
+import { TableBody, TableCell, TableRow } from 'shared/ui/table'
 
 type Props = {
   data: TableData
@@ -12,7 +12,7 @@ const openInNewTab = (username: string, id: number) => {
   if (newWindow) newWindow.opener = null
 }
 
-export const Body = ({data, username}: Props) => {
+export const Body = ({ data, username }: Props) => {
   return (
     <TableBody>
       {data.map((data) => (

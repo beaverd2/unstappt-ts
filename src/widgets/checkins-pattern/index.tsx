@@ -1,15 +1,15 @@
-import {Block} from 'shared/ui/block'
-import {Select} from 'shared/ui/select'
-import {Chart} from './ui/chart'
-import {Beer} from 'shared/types/data'
-import {useState} from 'react'
+import { Block } from 'shared/ui/block'
+import { Select } from 'shared/ui/select'
+import { Chart } from './ui/chart'
+import { Beer } from 'shared/types/data'
+import { useState } from 'react'
 
 type Props = {
   loading: boolean
   beers: Beer[]
 }
 
-export const CheckinsPattern = ({loading, beers}: Props) => {
+export const CheckinsPattern = ({ loading, beers }: Props) => {
   const [type, setType] = useState<'days' | 'hours'>('days')
 
   const handleType = (e: any) => {
@@ -24,8 +24,8 @@ export const CheckinsPattern = ({loading, beers}: Props) => {
           value={type}
           onChange={handleType}
           options={[
-            {value: 'days', label: 'days'},
-            {value: 'hours', label: 'hours'},
+            { value: 'days', label: 'days' },
+            { value: 'hours', label: 'hours' },
           ]}
         />
       </div>

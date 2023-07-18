@@ -1,7 +1,16 @@
-import {Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend} from 'chart.js'
-import {getChartData} from '../lib'
-import {Beer} from 'shared/types/data'
-import {Line} from 'react-chartjs-2'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js'
+import { getChartData } from '../lib'
+import { Beer } from 'shared/types/data'
+import { Line } from 'react-chartjs-2'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
@@ -11,8 +20,8 @@ type Props = {
   endDate: Date
 }
 
-export const Chart = ({beers, startDate, endDate}: Props) => {
-  const chartData = getChartData({beers, startDate, endDate})
+export const Chart = ({ beers, startDate, endDate }: Props) => {
+  const chartData = getChartData({ beers, startDate, endDate })
   return (
     <Line
       height={250}

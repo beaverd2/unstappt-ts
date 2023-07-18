@@ -2,7 +2,7 @@ type Props = {
   img?: boolean
 }
 
-export const SkeletonList = ({img}: Props) => {
+export const SkeletonList = ({ img }: Props) => {
   return (
     <>
       {new Array(5).fill(0).map((_, index) => (

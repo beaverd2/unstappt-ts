@@ -1,12 +1,12 @@
-import {SelectHTMLAttributes} from 'react'
-import {cn} from 'shared/lib/utils'
+import { SelectHTMLAttributes } from 'react'
+import { cn } from 'shared/lib/utils'
 
 type Props = {
   className?: string
-  options: {value: any; label: string}[]
+  options: { value: any; label: string }[]
 } & SelectHTMLAttributes<HTMLSelectElement>
 
-export const Select = ({options, className, ...props}: Props) => {
+export const Select = ({ options, className, ...props }: Props) => {
   return (
     <select
       className={cn(

@@ -1,5 +1,5 @@
-import {ReactNode} from 'react'
-import {cn} from 'shared/lib/utils'
+import { ReactNode } from 'react'
+import { cn } from 'shared/lib/utils'
 
 type Item = {
   name: string
@@ -22,7 +22,7 @@ type OptionalLinkProps = {
   className?: string
 }
 
-const OptionalLink = ({children, url, className}: OptionalLinkProps) => {
+const OptionalLink = ({ children, url, className }: OptionalLinkProps) => {
   return url ? (
     <a className={className} href={url} target="_blank" rel="noopener noreferrer">
       {children}
@@ -32,7 +32,7 @@ const OptionalLink = ({children, url, className}: OptionalLinkProps) => {
   )
 }
 
-export const Item = ({item, filter, link}: Props) => {
+export const Item = ({ item, filter, link }: Props) => {
   return (
     <OptionalLink
       className={cn('mb-4 flex items-start bg-white', link && 'cursor-pointer transition-colors hover:bg-slate-100')}

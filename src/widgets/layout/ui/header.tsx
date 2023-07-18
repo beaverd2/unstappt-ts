@@ -1,6 +1,6 @@
-import {format, subDays} from 'date-fns'
+import { format, subDays } from 'date-fns'
 import Link from 'next/link'
-import {ChangeEvent, FormEvent, useRef, useState} from 'react'
+import { ChangeEvent, FormEvent, useRef, useState } from 'react'
 
 const today = new Date()
 const weekAgo = subDays(today, 7)

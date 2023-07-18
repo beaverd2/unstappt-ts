@@ -1,5 +1,5 @@
-import {ComponentPropsWithRef, HTMLAttributes, ReactNode} from 'react'
-import {cn} from 'shared/lib/utils'
+import { ComponentPropsWithRef, HTMLAttributes, ReactNode } from 'react'
+import { cn } from 'shared/lib/utils'
 
 type Props = {
   children: ReactNode
@@ -7,7 +7,7 @@ type Props = {
 } & HTMLAttributes<HTMLButtonElement> &
   ComponentPropsWithRef<'button'>
 
-export const Button = ({children, className, ...props}: Props) => {
+export const Button = ({ children, className, ...props }: Props) => {
   return (
     <button
       className={cn(

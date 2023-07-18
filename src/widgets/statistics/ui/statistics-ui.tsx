@@ -1,5 +1,5 @@
-import {Beer, Brewery, Country, Style} from 'shared/types/data'
-import {Item} from './item'
+import { Beer, Brewery, Country, Style } from 'shared/types/data'
+import { Item } from './item'
 
 const labelMap: Record<string, string> = {
   checkinsCount: 'Check-ins',
@@ -17,7 +17,7 @@ type FormatStatistics = {
   countries: Country[]
 }
 
-const formatStatistics = ({beers, styles, breweries, countries}: FormatStatistics) => ({
+const formatStatistics = ({ beers, styles, breweries, countries }: FormatStatistics) => ({
   checkinsCount: beers.length,
   beersCount: beers.filter((beer) => beer.count === 1).length,
   stylesCount: styles.length,
@@ -34,7 +34,7 @@ type Props = {
   countries: Country[]
 }
 
-export const StatisticsUi = ({beers, styles, breweries, countries}: Props) => {
+export const StatisticsUi = ({ beers, styles, breweries, countries }: Props) => {
   const statistics = formatStatistics({
     beers,
     styles,

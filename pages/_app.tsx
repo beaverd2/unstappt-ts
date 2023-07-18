@@ -1,8 +1,8 @@
 import 'shared/styles/globals.css'
-import type {AppProps} from 'next/app'
-import {Layout} from 'widgets/layout'
+import type { AppProps } from 'next/app'
+import { Layout } from 'widgets/layout'
 
-function App({Component, pageProps}: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <Layout>
       <Component {...pageProps} />

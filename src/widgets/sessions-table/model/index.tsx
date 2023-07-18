@@ -1,7 +1,7 @@
-import {differenceInHours} from 'date-fns'
-import {useMemo, useState} from 'react'
-import {sortTable} from 'shared/lib/sort-table'
-import {Beer} from 'shared/types/data'
+import { differenceInHours } from 'date-fns'
+import { useMemo, useState } from 'react'
+import { sortTable } from 'shared/lib/sort-table'
+import { Beer } from 'shared/types/data'
 
 export type SortKey = 'startTime' | 'endTime' | 'total'
 export type SortOrder = 'ascn' | 'desc'
@@ -16,7 +16,7 @@ type Props = {
   defaultSortKey?: SortKey
 }
 
-export const useTableData = ({beers, defaultSortKey = 'startTime'}: Props) => {
+export const useTableData = ({ beers, defaultSortKey = 'startTime' }: Props) => {
   const [sortKey, setSortKey] = useState<SortKey>(defaultSortKey)
   const [sortOrder, setSortOrder] = useState<SortOrder>('ascn')
 
@@ -35,7 +35,7 @@ export const useTableData = ({beers, defaultSortKey = 'startTime'}: Props) => {
     [beers, sortKey, sortOrder]
   )
 
-  return {tableData, handleSort, sortKey, sortOrder} as const
+  return { tableData, handleSort, sortKey, sortOrder } as const
 }
 
 const getSessions = (beers: Beer[]): TableData => {

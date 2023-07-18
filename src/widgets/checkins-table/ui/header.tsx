@@ -1,6 +1,6 @@
-import {ArrowUpIcon, ArrowDownIcon} from '@heroicons/react/24/outline'
-import {SortKey, SortOrder} from '../model'
-import {TableHead, TableHeader, TableRow} from 'shared/ui/table'
+import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/outline'
+import { SortKey, SortOrder } from '../model'
+import { TableHead, TableHeader, TableRow } from 'shared/ui/table'
 
 type Props = {
   sortKey: SortKey
@@ -9,15 +9,15 @@ type Props = {
 }
 
 const headers = [
-  {key: 'name', label: 'Name'},
-  {key: 'brewery', label: 'Brewery'},
-  {key: 'style', label: 'Style'},
-  {key: 'userRating', label: 'User rating'},
-  {key: 'globalRating', label: 'Global rating'},
-  {key: 'date', label: 'Date'},
+  { key: 'name', label: 'Name' },
+  { key: 'brewery', label: 'Brewery' },
+  { key: 'style', label: 'Style' },
+  { key: 'userRating', label: 'User rating' },
+  { key: 'globalRating', label: 'Global rating' },
+  { key: 'date', label: 'Date' },
 ]
 
-export const Header = ({sortKey, sortOrder, changeSort}: Props) => {
+export const Header = ({ sortKey, sortOrder, changeSort }: Props) => {
   return (
     <TableHeader>
       <TableRow>

@@ -1,6 +1,6 @@
-import {ButtonHTMLAttributes} from 'react'
+import { ButtonHTMLAttributes } from 'react'
 import clsx from 'clsx'
-import {cn} from 'shared/lib/utils'
+import { cn } from 'shared/lib/utils'
 
 type Props = {
   variant?: 'primary' | 'secondary'
@@ -8,7 +8,7 @@ type Props = {
   icon: JSX.Element
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-export const IconButton = ({variant = 'primary', size = 'md', className, icon, ...props}: Props) => {
+export const IconButton = ({ variant = 'primary', size = 'md', className, icon, ...props }: Props) => {
   const styles = cn(
     'inline-flex items-center justify-center rounded-md border font-medium shadow-sm outline-none transition-colors focus:ring-2 disabled:pointer-events-none disabled:opacity-60 focus:ring-blue-500',
     variant === 'primary' &&

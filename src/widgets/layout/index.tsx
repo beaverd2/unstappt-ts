@@ -1,6 +1,6 @@
-import {ReactNode} from 'react'
-import {Footer} from './ui/footer'
-import {Header} from './ui/header'
+import { ReactNode } from 'react'
+import { Footer } from './ui/footer'
+import { Header } from './ui/header'
 
 type Props = {
   children: ReactNode

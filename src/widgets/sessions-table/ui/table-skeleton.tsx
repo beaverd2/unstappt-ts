@@ -1,10 +1,10 @@
-import {cn} from 'shared/lib/utils'
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from 'shared/ui/table'
+import { cn } from 'shared/lib/utils'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'shared/ui/table'
 
 const headers = [
-  {key: 'startTime', label: 'Start time'},
-  {key: 'endTime', label: 'End time'},
-  {key: 'total', label: 'Total drinks'},
+  { key: 'startTime', label: 'Start time' },
+  { key: 'endTime', label: 'End time' },
+  { key: 'total', label: 'Total drinks' },
 ]
 
 export const TableSkeleton = () => {

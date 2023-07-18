@@ -1,12 +1,12 @@
-import {cn} from 'shared/lib/utils'
-import {Beer, Brewery, Country, Region, Style} from 'shared/types/data'
-import {Block} from '../block'
-import {Item} from './ui/item'
-import {Button} from '../button'
-import {Select} from '../select'
-import {formatItem, getShortStyles, filterSort} from './lib'
-import {SkeletonList} from './ui/skeleton-list'
-import {useState} from 'react'
+import { cn } from 'shared/lib/utils'
+import { Beer, Brewery, Country, Region, Style } from 'shared/types/data'
+import { Block } from '../block'
+import { Item } from './ui/item'
+import { Button } from '../button'
+import { Select } from '../select'
+import { formatItem, getShortStyles, filterSort } from './lib'
+import { SkeletonList } from './ui/skeleton-list'
+import { useState } from 'react'
 
 type Props = {
   data: Beer[] | Brewery[] | Country[] | Region[] | Style[]
@@ -57,8 +57,8 @@ export const List = ({
             value={styleType}
             onChange={handleStyle}
             options={[
-              {value: 'full', label: 'Full styles'},
-              {value: 'short', label: 'Short styles'},
+              { value: 'full', label: 'Full styles' },
+              { value: 'short', label: 'Short styles' },
             ]}
           />
         )}
@@ -67,8 +67,8 @@ export const List = ({
             value={filterValue}
             onChange={handleFilter}
             options={[
-              {value: 'count', label: 'Count'},
-              {value: 'rating', label: 'Rating'},
+              { value: 'count', label: 'Count' },
+              { value: 'rating', label: 'Rating' },
             ]}
           />
         )}

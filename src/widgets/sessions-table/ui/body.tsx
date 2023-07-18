@@ -1,12 +1,12 @@
-import {TableData} from '../model'
-import {format} from 'date-fns'
-import {TableBody, TableCell, TableRow} from 'shared/ui/table'
+import { TableData } from '../model'
+import { format } from 'date-fns'
+import { TableBody, TableCell, TableRow } from 'shared/ui/table'
 
 type Props = {
   data: TableData
 }
 
-export const Body = ({data}: Props) => {
+export const Body = ({ data }: Props) => {
   return (
     <TableBody>
       {data.map((data) => (

@@ -1,10 +1,10 @@
-import {format, isValid, subDays} from 'date-fns'
-import {useRouter} from 'next/router'
-import React, {useEffect, useMemo, useState} from 'react'
+import { format, isValid, subDays } from 'date-fns'
+import { useRouter } from 'next/router'
+import React, { useEffect, useMemo, useState } from 'react'
 import DatePicker from 'react-datepicker'
-import {ButtonInput} from './ui/button-input'
-import {IconButton} from 'shared/ui/icon-button'
-import {ChevronLeftIcon, ChevronRightIcon} from '@heroicons/react/24/outline'
+import { ButtonInput } from './ui/button-input'
+import { IconButton } from 'shared/ui/icon-button'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 
 interface DatePickerProps {
   loading: boolean
@@ -24,26 +24,26 @@ export const RangePicker = (props: DatePickerProps) => {
     () => (props.endDate && isValid(new Date(props.endDate)) ? new Date(props.endDate) : today),
     [props.endDate]
   )
-  const [range, setRange] = useState<{startDate: Date | null; endDate: Date | null}>({startDate, endDate})
+  const [range, setRange] = useState<{ startDate: Date | null; endDate: Date | null }>({ startDate, endDate })
   const router = useRouter()
 
   const onChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates
-    setRange({startDate: start, endDate: end})
+    setRange({ startDate: start, endDate: end })
     if (start && end) {
       router.push({
-        query: {...router.query, startDate: format(start, 'yyyy-MM-dd'), endDate: format(end, 'yyyy-MM-dd')},
+        query: { ...router.query, startDate: format(start, 'yyyy-MM-dd'), endDate: format(end, 'yyyy-MM-dd') },
       })
     }
   }
   useEffect(() => {
     if (startDate && endDate) {
-      setRange({startDate, endDate})
+      setRange({ startDate, endDate })
     }
   }, [startDate, endDate])
 
   return (
-    <div className="flex mb-2 w-full col-span-2">
+    <div className="col-span-2 mb-2 flex w-full">
       <DatePicker
         disabled={props.loading}
         maxDate={today}

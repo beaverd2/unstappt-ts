@@ -21,7 +21,7 @@ type Props = {
   label: string
 }
 
-const ItemSkeleton = ({label}: Props) => {
+const ItemSkeleton = ({ label }: Props) => {
   return (
     <div className="flex basis-2/5 flex-col items-center rounded-md bg-white p-2 text-center shadow-md">
       <p className="text-2 mb-2">{label}</p>

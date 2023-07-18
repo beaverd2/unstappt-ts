@@ -1,7 +1,7 @@
-import {eachDayOfInterval, format} from 'date-fns'
-import {Beer} from 'shared/types/data'
+import { eachDayOfInterval, format } from 'date-fns'
+import { Beer } from 'shared/types/data'
 
-type datasetType = {[key: string]: number}
+type datasetType = { [key: string]: number }
 
 type GetChartData = {
   beers: Beer[]
@@ -9,9 +9,9 @@ type GetChartData = {
   endDate: Date
 }
 
-export const getChartData = ({beers, startDate, endDate}: GetChartData): {labels: string[]; data: number[]} => {
+export const getChartData = ({ beers, startDate, endDate }: GetChartData): { labels: string[]; data: number[] } => {
   const dataset: datasetType = {}
-  eachDayOfInterval({start: startDate, end: endDate})
+  eachDayOfInterval({ start: startDate, end: endDate })
     .map((date) => format(date, 'dd/MM/yyyy'))
     .forEach((date) => (dataset[date] = 0))
 
@@ -25,5 +25,5 @@ export const getChartData = ({beers, startDate, endDate}: GetChartData): {labels
 
   const labels = Object.keys(dataset)
   const data = Object.values(dataset)
-  return {labels, data}
+  return { labels, data }
 }

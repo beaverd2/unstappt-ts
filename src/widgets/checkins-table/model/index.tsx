@@ -1,6 +1,6 @@
-import {useMemo, useState} from 'react'
-import {sortTable} from 'shared/lib/sort-table'
-import {Beer} from 'shared/types/data'
+import { useMemo, useState } from 'react'
+import { sortTable } from 'shared/lib/sort-table'
+import { Beer } from 'shared/types/data'
 
 export type SortKey = 'name' | 'brewery' | 'style' | 'userRating' | 'globalRating' | 'date'
 export type SortOrder = 'ascn' | 'desc'
@@ -19,7 +19,7 @@ type Props = {
   defaultSortKey?: SortKey
 }
 
-export const useTableData = ({beers, defaultSortKey = 'date'}: Props) => {
+export const useTableData = ({ beers, defaultSortKey = 'date' }: Props) => {
   const [sortKey, setSortKey] = useState<SortKey>(defaultSortKey)
   const [sortOrder, setSortOrder] = useState<SortOrder>('ascn')
 
@@ -51,5 +51,5 @@ export const useTableData = ({beers, defaultSortKey = 'date'}: Props) => {
     [sortKey, sortOrder, beers]
   )
 
-  return {tableData, handleSort, sortKey, sortOrder} as const
+  return { tableData, handleSort, sortKey, sortOrder } as const
 }

@@ -1,21 +1,21 @@
-import type {NextPage} from 'next'
+import type { NextPage } from 'next'
 import Head from 'next/head'
-import {useRouter} from 'next/router'
-import {fetchBeers, fetchUser} from 'shared/api'
-import {Statistics} from 'widgets/statistics'
-import {User} from 'widgets/user'
-import {Beers} from 'widgets/beers'
-import {Breweries} from 'widgets/breweries'
-import {Countries} from 'widgets/countries'
-import {Regions} from 'widgets/regions'
-import {Styles} from 'widgets/styles'
-import {CheckinsTable} from 'widgets/checkins-table'
-import {SessionsTable} from 'widgets/sessions-table'
-import {RangePicker} from 'widgets/range-picker'
-import {Activity} from 'widgets/activity'
-import {CheckinsPattern} from 'widgets/checkins-pattern'
-import {beersMock, userMock} from 'shared/mock'
-import {formatBeerData, mapUserDataToUser} from 'shared/lib/utils'
+import { useRouter } from 'next/router'
+import { fetchBeers, fetchUser } from 'shared/api'
+import { Statistics } from 'widgets/statistics'
+import { User } from 'widgets/user'
+import { Beers } from 'widgets/beers'
+import { Breweries } from 'widgets/breweries'
+import { Countries } from 'widgets/countries'
+import { Regions } from 'widgets/regions'
+import { Styles } from 'widgets/styles'
+import { CheckinsTable } from 'widgets/checkins-table'
+import { SessionsTable } from 'widgets/sessions-table'
+import { RangePicker } from 'widgets/range-picker'
+import { Activity } from 'widgets/activity'
+import { CheckinsPattern } from 'widgets/checkins-pattern'
+import { beersMock, userMock } from 'shared/mock'
+import { formatBeerData, mapUserDataToUser } from 'shared/lib/utils'
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
       <div className="container mx-auto mt-4 grid grid-cols-2 gap-4 px-4">
         <User loading={userLoading} user={user} />
         <RangePicker
-          isLoading={userLoading || beersLoading}
+          loading={userLoading || beersLoading}
           startDate={router.query?.startDate as string}
           endDate={router.query?.endDate as string}
         />
