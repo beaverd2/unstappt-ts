@@ -28,8 +28,8 @@ export const Header = () => {
   return (
     <div className="w-full bg-amber-400 py-2 md:py-4">
       <div className="container mx-auto flex items-center justify-between gap-4 px-4">
-        <Link href="/" passHref>
-          <a className="text-xl font-semibold md:text-4xl">Unstappt</a>
+        <Link className="text-xl font-semibold md:text-4xl" href="/" passHref>
+          Unstappt
         </Link>
         <form onSubmit={handleSubmit}>
           <input

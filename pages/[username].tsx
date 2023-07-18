@@ -24,11 +24,12 @@ const Home: NextPage = () => {
   const beers = formatBeerData(beersMock as any)
   const userLoading = false
   const beersLoading = false
+  const title = router.query.username ? `${router.query.username ?? ''} on Unstappt` : 'Unstappt'
 
   return (
     <>
       <Head>
-        <title>{router.query.username} on Unstappt </title>
+        <title>{title}</title>
       </Head>
       <div className="container mx-auto mt-4 grid grid-cols-2 gap-4 px-4">
         <User loading={userLoading} user={user} />
