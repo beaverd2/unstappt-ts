@@ -64,6 +64,6 @@ export const fetchBeers = async ({ username, startDate, endDate, offset = 0 }: F
     }
     return beers
   } catch (error) {
-    console.log(error)
+    throw error
   }
 }

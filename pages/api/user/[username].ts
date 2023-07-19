@@ -7,12 +7,13 @@ type ErrorMessage = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<UserData | ErrorMessage>) {
-  const {
-    query: { username },
-  } = req
+  const { username } = req.query
+
   if (!username) {
-    res.status(500).json({ error: 'type username' })
+    res.status(500).json({ error: 'Please provide a username' })
+    return
   }
+
   try {
     const user = await fetchUser(username as string)
     res.status(200).json(user)

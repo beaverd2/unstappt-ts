@@ -21,10 +21,6 @@ const TableBody = ({ children, className }: Props) => {
   return <tbody className={cn('[&_tr:last-child]:border-0', className)}>{children}</tbody>
 }
 
-const TableFooter = ({ children, className }: Props) => {
-  return <tfoot className={cn('bg-primary text-primary-foreground font-medium', className)}>{children}</tfoot>
-}
-
 type TableRowProps = {
   onClick?: () => void
 } & Props
@@ -62,4 +58,4 @@ const TableCell = ({ children, className, ...props }: Props) => {
   )
 }
 
-export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell }
+export { Table, TableHeader, TableBody, TableHead, TableRow, TableCell }

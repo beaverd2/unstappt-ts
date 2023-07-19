@@ -5,9 +5,8 @@ type ErrorMessage = {
 }
 
 export default async function fetchUser(req: NextApiRequest, res: NextApiResponse<ErrorMessage>) {
-  const {
-    query: { username },
-  } = req
+  const { username } = req.query
+
   if (!username) {
     res.status(200).json({ error: 'type username' })
   }
