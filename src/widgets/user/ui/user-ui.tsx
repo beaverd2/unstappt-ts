@@ -1,6 +1,5 @@
 import { Block } from 'shared/ui/block'
 import { format } from 'date-fns'
-import { isUser } from 'shared/lib/utils'
 import { User } from 'shared/types/data'
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
@@ -10,7 +9,6 @@ type Props = {
 }
 
 export const UserUi = ({ user }: Props) => {
-  if (!isUser(user)) return null
   return (
     <Block className="col-span-2 flex-row gap-4">
       {user.avatar && (

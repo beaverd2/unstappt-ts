@@ -6,7 +6,7 @@ import { Button } from '../button'
 import { Select } from '../select'
 import { formatItem, getShortStyles, filterSort } from './lib'
 import { SkeletonList } from './ui/skeleton-list'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type Props = {
   data: Beer[] | Brewery[] | Country[] | Region[] | Style[]
@@ -32,13 +32,13 @@ export const List = ({
   style = false,
 }: Props) => {
   const [filterValue, setFilter] = useState(defaultFilter)
-  const [showAll, setShowAll] = useState(false)
+  const [itemsLength, setItemsLength] = useState(5)
   const [styleType, setStyleType] = useState<'full' | 'short'>('full')
   const sortedData = filterSort(
     styleType === 'short' ? getShortStyles(data as Style[]) : data,
     filter ? filterValue : null
   )
-  const items = showAll ? sortedData : sortedData.slice(0, 5)
+  const items = itemsLength >= sortedData.length ? sortedData : sortedData.slice(0, itemsLength)
 
   const handleFilter = (e: any) => {
     setFilter(e.target?.value)
@@ -47,6 +47,12 @@ export const List = ({
   const handleStyle = (e: any) => {
     setStyleType(e.target?.value)
   }
+
+  useEffect(() => {
+    setItemsLength(5)
+    setFilter(defaultFilter)
+    setStyleType('full')
+  }, [data, defaultFilter])
 
   return (
     <Block className={cn('col-span-2 self-start md:col-span-1', className)}>
@@ -80,8 +86,8 @@ export const List = ({
           <Item key={item.name + index} item={formatItem(item)} filter={filterValue} link={links} />
         ))
       )}
-      {!showAll && !loading && items.length < sortedData.length && (
-        <Button onClick={() => setShowAll(true)}>Show more</Button>
+      {!loading && items.length < sortedData.length && (
+        <Button onClick={() => setItemsLength((length) => length + 5)}>Show more</Button>
       )}
     </Block>
   )

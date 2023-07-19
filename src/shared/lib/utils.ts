@@ -1,7 +1,7 @@
 import { ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { BeerData, UserData } from '../types/requests'
-import { Data, User } from '../types/data'
+import { Beer, Brewery, Country, Data, Region, Style } from '../types/data'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -76,7 +76,7 @@ const addStyle = (obj: any, beer: BeerData) => {
   }
 }
 
-const mapBeer = (beer: BeerData) => {
+const mapBeer = (beer: BeerData): Beer => {
   return {
     id: beer.recent_checkin_id,
     name: beer.beer.beer_name,
@@ -102,10 +102,10 @@ export const formatBeerData = (beersData?: BeerData[]): Data => {
       regions: [],
     }
 
-  const breweries: any = {}
-  const styles: any = {}
-  const countries: any = {}
-  const regions: any = {}
+  const breweries: { [key: string]: Brewery } = {}
+  const styles: { [key: string]: Style } = {}
+  const countries: { [key: string]: Country } = {}
+  const regions: { [key: string]: Region } = {}
 
   for (const beer of beersData) {
     addBrewery(breweries, beer)
@@ -121,16 +121,4 @@ export const formatBeerData = (beersData?: BeerData[]): Data => {
     countries: Object.values(countries),
     regions: Object.values(regions),
   }
-}
-
-export const isUser = (obj: User | {}): obj is User => {
-  return (
-    (obj as User).username !== undefined &&
-    (obj as User).firstName !== undefined &&
-    (obj as User).lastName !== undefined &&
-    (obj as User).checkins !== undefined &&
-    (obj as User).beers !== undefined &&
-    (obj as User).avatar !== undefined &&
-    (obj as User).joinedDate !== undefined
-  )
 }

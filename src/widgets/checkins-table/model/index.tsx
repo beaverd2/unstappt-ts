@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { sortTable } from 'shared/lib/sort-table'
 import { Beer } from 'shared/types/data'
 
@@ -32,6 +32,11 @@ export const useTableData = ({ beers, defaultSortKey = 'date' }: Props) => {
     setSortOrder(key !== sortKey ? 'ascn' : 'desc')
     setSortKey(key)
   }
+
+  useEffect(() => {
+    setSortKey(defaultSortKey)
+    setSortOrder('ascn')
+  }, [beers, defaultSortKey])
 
   const tableData = useMemo(
     () =>

@@ -2,7 +2,7 @@ import { Block } from 'shared/ui/block'
 import { Select } from 'shared/ui/select'
 import { Chart } from './ui/chart'
 import { Beer } from 'shared/types/data'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type Props = {
   loading: boolean
@@ -15,6 +15,10 @@ export const CheckinsPattern = ({ loading, beers }: Props) => {
   const handleType = (e: any) => {
     setType(e.target?.value)
   }
+
+  useEffect(() => {
+    setType('days')
+  }, [beers])
 
   return (
     <Block className="col-span-2">
