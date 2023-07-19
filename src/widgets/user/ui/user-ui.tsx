@@ -3,6 +3,7 @@ import { format } from 'date-fns'
 import { isUser } from 'shared/lib/utils'
 import { User } from 'shared/types/data'
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
 
 type Props = {
   user: User
@@ -12,7 +13,7 @@ export const UserUi = ({ user }: Props) => {
   if (!isUser(user)) return null
   return (
     <Block className="col-span-2 flex-row gap-4">
-      <img className="h-20 w-20 rounded-full" src={user.avatar} />
+      <Image alt="user avatar" className="h-20 w-20 rounded-full" src={user.avatar} />
       <div className="flex flex-1 flex-col gap-2">
         <div className="flex justify-between gap-2">
           <div className="flex flex-col">
