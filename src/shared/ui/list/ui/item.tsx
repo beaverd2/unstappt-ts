@@ -39,7 +39,15 @@ export const Item = ({ item, filter, link }: Props) => {
       className={cn('mb-4 flex items-start bg-white', link && 'cursor-pointer transition-colors hover:bg-slate-100')}
       url={item?.url}
     >
-      {item?.img && <Image alt="item logo" src={item?.img} className="mr-4 h-10 w-10 self-center object-cover" />}
+      {item?.img && (
+        <Image
+          alt="item logo"
+          src={item?.img}
+          className="mr-4 h-10 w-10 self-center object-cover"
+          width={40}
+          height={40}
+        />
+      )}
       <div className="flex flex-col">
         <p className="line-clamp-1">{item?.name}</p>
         <p className="line-clamp-1">{item?.name2}</p>
