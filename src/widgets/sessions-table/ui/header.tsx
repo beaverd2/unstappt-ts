@@ -10,7 +10,7 @@ type Props = {
 const headers = [
   { key: 'startTime', label: 'Start time' },
   { key: 'endTime', label: 'End time' },
-  { key: 'total', label: 'Total drinks' },
+  { key: 'checkins', label: 'Check-ins' },
 ]
 
 export const Header = ({ sortKey, sortOrder, changeSort }: Props) => {

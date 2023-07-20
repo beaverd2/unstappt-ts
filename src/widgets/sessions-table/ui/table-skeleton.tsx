@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 's
 const headers = [
   { key: 'startTime', label: 'Start time' },
   { key: 'endTime', label: 'End time' },
-  { key: 'total', label: 'Total drinks' },
+  { key: 'checkins', label: 'Check-ins' },
 ]
 
 export const TableSkeleton = () => {
