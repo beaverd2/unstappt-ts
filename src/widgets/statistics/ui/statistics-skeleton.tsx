@@ -1,6 +1,6 @@
 const labelMap: Record<string, string> = {
   checkinsCount: 'Check-ins',
-  beersCount: 'Beers',
+  beersCount: 'Unique check-ins',
   stylesCount: 'Styles',
   breweriesCount: 'Breweries',
   countriesCount: 'Countries',
