@@ -19,100 +19,61 @@ export const mapUserDataToUser = (userData?: UserData) => {
   }
 }
 
-const addRatingInfo = (obj: any, rating: number) => {
-  if (obj === undefined) {
-    return {
-      sumRating: rating,
-      avgRating: rating,
-      count: 1,
-    }
-  } else {
-    obj.count++
-    obj.sumRating += rating
-    obj.avgRating = obj.sumRating / obj.count
-    return obj
+type RatingInfo = {
+  sumRating: number
+  avgRating: number
+  count: number
+}
+
+const updateRatingInfo = (obj: RatingInfo | undefined, rating: number): RatingInfo => {
+  if (!obj) return { sumRating: rating, avgRating: rating, count: 1 }
+  const sumRating = obj.sumRating + rating
+  const count = obj.count + 1
+  return { sumRating, avgRating: sumRating / count, count }
+}
+
+const addEntity = (obj: { [key: string]: any }, key: string, rating: number, additionalProps: any = {}) => {
+  obj[key] = {
+    ...updateRatingInfo(obj[key], rating),
+    ...additionalProps,
+    name: key,
   }
 }
 
-const addRegion = (obj: any, beer: BeerData) => {
-  const name = beer.brewery.location.brewery_state === '' ? 'Other' : beer.brewery.location.brewery_state
-  const rating = beer.rating_score
-  obj[name] = {
-    name: name,
-    ...addRatingInfo(obj[name], rating),
-  }
-}
+const mapBeer = (beer: BeerData): Beer => ({
+  id: beer.recent_checkin_id,
+  name: beer.beer.beer_name,
+  brewery: beer.brewery.brewery_name,
+  country: beer.brewery.country_name,
+  style: beer.beer.beer_style,
+  img: beer.beer.beer_label,
+  userRating: beer.rating_score,
+  globalRating: Number(beer.beer.rating_score.toPrecision(3)),
+  count: beer.count,
+  url: `https://untappd.com/b/${beer.brewery.brewery_slug}/${beer.beer.bid}`,
+  date: beer.recent_created_at,
+})
 
-const addCountry = (obj: any, beer: BeerData) => {
-  const name = beer.brewery.country_name
-  const rating = beer.rating_score
-  obj[name] = {
-    name: name,
-    ...addRatingInfo(obj[name], rating),
-  }
-}
-
-const addBrewery = (obj: any, beer: BeerData) => {
-  const name = beer.brewery.brewery_name
-  const country = beer.brewery.country_name
-  const img = beer.brewery.brewery_label
-  const url = 'https://untappd.com' + beer.brewery.brewery_page_url
-  const rating = beer.rating_score
-  obj[name] = {
-    name: name,
-    country: country,
-    img: img,
-    url: url,
-    ...addRatingInfo(obj[name], rating),
-  }
-}
-
-const addStyle = (obj: any, beer: BeerData) => {
-  const name = beer.beer.beer_style
-  const rating = beer.rating_score
-  obj[name] = {
-    name: name,
-    ...addRatingInfo(obj[name], rating),
-  }
-}
-
-const mapBeer = (beer: BeerData): Beer => {
-  return {
-    id: beer.recent_checkin_id,
-    name: beer.beer.beer_name,
-    brewery: beer.brewery.brewery_name,
-    country: beer.brewery.country_name,
-    style: beer.beer.beer_style,
-    img: beer.beer.beer_label,
-    userRating: beer.rating_score,
-    globalRating: Number(beer.beer.rating_score.toPrecision(3)),
-    count: beer.count,
-    url: 'https://untappd.com/b/' + beer.brewery.brewery_slug + '/' + beer.beer.bid,
-    date: beer.recent_created_at,
-  }
-}
-
-export const formatBeerData = (beersData?: BeerData[]): Data => {
-  if (!beersData)
-    return {
-      beers: [],
-      breweries: [],
-      styles: [],
-      countries: [],
-      regions: [],
-    }
-
+export const formatBeerData = (beersData: BeerData[] = []): Data => {
   const breweries: { [key: string]: Brewery } = {}
   const styles: { [key: string]: Style } = {}
   const countries: { [key: string]: Country } = {}
   const regions: { [key: string]: Region } = {}
 
-  for (const beer of beersData) {
-    addBrewery(breweries, beer)
-    addStyle(styles, beer)
-    addCountry(countries, beer)
-    addRegion(regions, beer)
-  }
+  beersData.forEach((beer) => {
+    const { brewery_name, country_name, brewery_label, brewery_page_url, location } = beer.brewery
+    const { beer_style, rating_score } = beer.beer
+    const regionName = location.brewery_state || 'Other'
+
+    addEntity(breweries, brewery_name, beer.rating_score, {
+      country: country_name,
+      img: brewery_label,
+      url: `https://untappd.com${brewery_page_url}`,
+    })
+    addEntity(styles, beer_style, rating_score)
+    addEntity(countries, country_name, rating_score)
+    addEntity(regions, regionName, rating_score)
+  })
 
   return {
     beers: beersData.map(mapBeer),

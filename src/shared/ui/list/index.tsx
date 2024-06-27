@@ -1,3 +1,4 @@
+'use client'
 import { cn } from 'shared/lib/utils'
 import { Beer, Brewery, Country, Region, Style } from 'shared/types/data'
 import { Block } from '../block'
@@ -5,13 +6,11 @@ import { Item } from './ui/item'
 import { Button } from '../button'
 import { Select } from '../select'
 import { formatItem, getShortStyles, filterSort } from './lib'
-import { SkeletonList } from './ui/skeleton-list'
 import { useEffect, useState } from 'react'
 
 type Props = {
   data: Beer[] | Brewery[] | Country[] | Region[] | Style[]
   title?: string
-  loading?: boolean
   img?: boolean
   filter?: boolean
   links?: boolean
@@ -23,8 +22,6 @@ type Props = {
 export const List = ({
   data,
   title,
-  loading,
-  img,
   filter = true,
   links,
   defaultFilter = 'count',
@@ -79,14 +76,10 @@ export const List = ({
           />
         )}
       </div>
-      {loading ? (
-        <SkeletonList img={img} />
-      ) : (
-        items.map((item, index) => (
-          <Item key={item.name + index} item={formatItem(item)} filter={filterValue} link={links} />
-        ))
-      )}
-      {!loading && items.length < sortedData.length && (
+      {items.map((item, index) => (
+        <Item key={item.name + index} item={formatItem(item)} filter={filterValue} link={links} />
+      ))}
+      {items.length < sortedData.length && (
         <Button onClick={() => setItemsLength((length) => length + 5)}>Show more</Button>
       )}
     </Block>

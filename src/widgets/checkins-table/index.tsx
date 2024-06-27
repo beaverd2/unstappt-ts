@@ -1,22 +1,29 @@
+'use client'
 import { Block } from 'shared/ui/block'
-import { Table } from './ui/table'
-import { TableSkeleton } from './ui/table-skeleton'
 import { Beer } from 'shared/types/data'
+import { Header } from './ui/header'
+import { Body } from './ui/body'
+import { Table } from 'shared/ui/table'
+import { useTableData } from './model'
 
 type Props = {
-  loading: boolean
   beers: Beer[]
   username: string
 }
 
-export const CheckinsTable = ({ loading, beers, username }: Props) => {
+export const CheckinsTable = ({ beers, username }: Props) => {
+  const { tableData, sortKey, sortOrder, handleSort } = useTableData({ beers })
+
   return (
     <Block className="col-span-2">
       <div className="mb-2 flex h-[42px] items-center justify-between">
         <p className="text-lg font-semibold">Check-ins</p>
       </div>
       <div className="w-full overflow-auto">
-        {loading ? <TableSkeleton /> : <Table beers={beers} username={username} />}
+        <Table>
+          <Header sortKey={sortKey} sortOrder={sortOrder} changeSort={handleSort} />
+          <Body data={tableData} username={username ?? ''} />
+        </Table>
       </div>
     </Block>
   )

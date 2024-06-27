@@ -1,3 +1,4 @@
+'use client'
 import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from 'shared/ui/toast'
 import { useToast } from 'shared/lib/use-toast'
 

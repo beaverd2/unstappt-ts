@@ -1,3 +1,4 @@
+'use client'
 import { Block } from 'shared/ui/block'
 import { Select } from 'shared/ui/select'
 import { Chart } from './ui/chart'
@@ -5,11 +6,10 @@ import { Beer } from 'shared/types/data'
 import { useEffect, useState } from 'react'
 
 type Props = {
-  loading: boolean
   beers: Beer[]
 }
 
-export const CheckinsPattern = ({ loading, beers }: Props) => {
+export const CheckinsPattern = ({ beers }: Props) => {
   const [type, setType] = useState<'days' | 'hours'>('days')
 
   const handleType = (e: any) => {
@@ -34,7 +34,7 @@ export const CheckinsPattern = ({ loading, beers }: Props) => {
         />
       </div>
       <div className="w-full">
-        {loading ? <div className="h-[250px] animate-pulse bg-gray-300"></div> : <Chart beers={beers} type={type} />}
+        <Chart beers={beers} type={type} />
       </div>
     </Block>
   )

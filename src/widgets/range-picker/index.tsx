@@ -1,43 +1,38 @@
+'use client'
 import { format } from 'date-fns'
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { ButtonInput } from './ui/button-input'
 import { IconButton } from 'shared/ui/icon-button'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import { usePathname, useRouter } from 'next/navigation'
+import { useRangeQuery } from 'shared/lib/use-range-query'
 
 const today = new Date()
 
-interface DatePickerProps {
-  loading: boolean
-  onChange: ({ startDate, endDate }: { startDate: Date; endDate: Date }) => void
-  range: { startDate: Date; endDate: Date }
-}
+export const RangePicker = () => {
+  const { startDate, endDate } = useRangeQuery()
+  const pathname = usePathname()
+  const router = useRouter()
 
-export const RangePicker = ({ loading, onChange, ...props }: DatePickerProps) => {
   const [range, setRange] = useState<{ startDate: Date | null; endDate: Date | null }>({
-    startDate: props.range.startDate,
-    endDate: props.range.endDate,
+    startDate: startDate,
+    endDate: endDate,
   })
 
   const handleRange = (date: [Date | null, Date | null]) => {
     const [start, end] = date
     setRange({ startDate: start, endDate: end })
     if (start && end) {
-      onChange({ startDate: start, endDate: end })
+      const startDate = format(start, 'yyyy-MM-dd')
+      const endDate = format(end, 'yyyy-MM-dd')
+      router.push(`${pathname}?startDate=${startDate}&endDate=${endDate}`)
     }
   }
-
-  useEffect(() => {
-    setRange({
-      startDate: props.range.startDate,
-      endDate: props.range.endDate,
-    })
-  }, [props.range])
 
   return (
     <div className="col-span-2 mb-2 flex w-full">
       <DatePicker
-        disabled={loading}
         maxDate={today}
         selected={range.startDate}
         onChange={(date) => handleRange(date)}

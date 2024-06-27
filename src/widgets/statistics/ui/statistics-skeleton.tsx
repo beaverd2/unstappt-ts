@@ -9,11 +9,11 @@ const labelMap: Record<string, string> = {
 
 export const StatisticsSkeleton = () => {
   return (
-    <>
+    <div className="col-span-2 mx-auto flex w-full flex-wrap justify-between gap-4">
       {Object.entries(labelMap).map(([key, _]) => (
         <ItemSkeleton label={labelMap[key]} key={key} />
       ))}
-    </>
+    </div>
   )
 }
 

@@ -19,8 +19,8 @@ export const getChartData = ({ beers, startDate, endDate }: GetChartData): { lab
     .map((beer) => format(new Date(beer.date), 'dd/MM/yyyy'))
     .reduce((cnt, cur) => ((cnt[cur] = cnt[cur] + 1 || 1), cnt), {} as datasetType)
 
-  Object.keys(mapOfDates).map((key, index) => {
-    dataset[key] = mapOfDates[key]
+  Object.keys(dataset).map((key, index) => {
+    dataset[key] = mapOfDates[key] ?? 0
   })
 
   const labels = Object.keys(dataset)
