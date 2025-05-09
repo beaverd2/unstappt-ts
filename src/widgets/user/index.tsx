@@ -1,7 +1,7 @@
 import { Block } from '@/shared/ui/block'
 import { format } from 'date-fns'
 import { User as UserType } from '@/shared/types/data'
-import { ChevronRight } from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
 import Image from 'next/image'
 
 type Props = {
@@ -32,7 +32,7 @@ export const User = ({ user }: Props) => {
         <div className="flex items-center justify-between">
           <p className="text-gray-500">Joined {user.joinedDate && format(new Date(user.joinedDate), 'd MMM yyyy')}</p>
           <a target="_blank" rel="noopener noreferrer" href={'https://untappd.com/user/' + user.username}>
-            <ChevronRight className="h-6 w-6" />
+            <ExternalLink className="h-6 w-6" />
           </a>
         </div>
       </div>
