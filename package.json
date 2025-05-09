@@ -10,8 +10,6 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
-    "@radix-ui/react-toast": "^1.1.4",
-    "@tanstack/react-query": "^4.29.25",
     "chart.js": "^3.7.0",
     "clsx": "^2.0.0",
     "date-fns": "^2.29.2",
