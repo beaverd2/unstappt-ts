@@ -1,5 +1,5 @@
 import { format, getHours } from 'date-fns'
-import { Beer } from 'shared/types/data'
+import { Beer } from '@/shared/types/data'
 
 export type ChartData = {
   labels: string[]

@@ -1,5 +1,5 @@
-import { Item } from './ui/item'
-import { Beer, Brewery, Country, Style } from 'shared/types/data'
+import { Item } from '@/widgets/statistics/ui/item'
+import { Beer, Brewery, Country, Style } from '@/shared/types/data'
 
 type Props = {
   beers: Beer[]

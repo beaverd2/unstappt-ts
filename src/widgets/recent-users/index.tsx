@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { STORAGE_KEYS } from 'shared/constants'
+import { STORAGE_KEYS } from '@/shared/constants'
 
 export const RecentUsers = () => {
   const router = useRouter()

@@ -1,12 +1,12 @@
-import { fetchBeers } from 'shared/api'
-import { Data } from 'shared/types/data'
-import { Activity } from 'widgets/activity'
-import { CheckinsPattern } from 'widgets/checkins-pattern'
-import { CheckinsTable } from 'widgets/checkins-table'
-import { Lists } from 'widgets/lists'
-import { RangePicker } from 'widgets/range-picker'
-import { SessionsTable } from 'widgets/sessions-table'
-import { Statistics } from 'widgets/statistics'
+import { fetchBeers } from '@/shared/api'
+import { Data } from '@/shared/types/data'
+import { Activity } from '@/widgets/activity'
+import { CheckinsPattern } from '@/widgets/checkins-pattern'
+import { CheckinsTable } from '@/widgets/checkins-table'
+import { Lists } from '@/widgets/lists'
+import { RangePicker } from '@/widgets/range-picker'
+import { SessionsTable } from '@/widgets/sessions-table'
+import { Statistics } from '@/widgets/statistics'
 
 const getData = async (username: string, startDate?: string, endDate?: string): Promise<Data> => {
   return await fetchBeers({ username, startDate, endDate })

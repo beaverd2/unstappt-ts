@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import { Button } from 'shared/ui/button'
+import { Button } from '@/shared/ui/button'
 
 export const ButtonInput = forwardRef(({ value, onClick }: any, ref: any) => {
   return (

@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect } from 'react'
-import { User } from 'shared/types/data'
-import { STORAGE_KEYS } from 'shared/constants'
+import { User } from '@/shared/types/data'
+import { STORAGE_KEYS } from '@/shared/constants'
 
 type Props = {
   user: User

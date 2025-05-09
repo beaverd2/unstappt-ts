@@ -2,11 +2,11 @@
 import { format } from 'date-fns'
 import { useState } from 'react'
 import DatePicker from 'react-datepicker'
-import { ButtonInput } from './ui/button-input'
-import { IconButton } from 'shared/ui/icon-button'
+import { ButtonInput } from '@/widgets/range-picker/ui/button-input'
+import { IconButton } from '@/shared/ui/icon-button'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { usePathname, useRouter } from 'next/navigation'
-import { useRangeQuery } from 'shared/lib/use-range-query'
+import { useRangeQuery } from '@/shared/lib/use-range-query'
 
 const today = new Date()
 

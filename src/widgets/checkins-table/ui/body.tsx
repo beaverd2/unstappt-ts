@@ -1,6 +1,6 @@
-import { TableData } from '../model'
+import { TableData } from '@/widgets/checkins-table/model'
 import { format } from 'date-fns'
-import { TableBody, TableCell, TableRow } from 'shared/ui/table'
+import { TableBody, TableCell, TableRow } from '@/shared/ui/table'
 
 type Props = {
   data: TableData

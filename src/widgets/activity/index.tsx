@@ -1,8 +1,8 @@
 'use client'
-import { Block } from 'shared/ui/block'
-import { Chart } from './ui/chart'
-import { Beer } from 'shared/types/data'
-import { useRangeQuery } from 'shared/lib/use-range-query'
+import { Block } from '@/shared/ui/block'
+import { Chart } from '@/widgets/activity/ui/chart'
+import { Beer } from '@/shared/types/data'
+import { useRangeQuery } from '@/shared/lib/use-range-query'
 
 type Props = {
   beers: Beer[]

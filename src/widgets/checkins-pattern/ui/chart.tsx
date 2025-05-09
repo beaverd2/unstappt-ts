@@ -1,5 +1,5 @@
-import { getChartData } from '../lib'
-import { Beer } from 'shared/types/data'
+import { getChartData } from '@/widgets/checkins-pattern/lib'
+import { Beer } from '@/shared/types/data'
 import { Bar } from 'react-chartjs-2'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'
 

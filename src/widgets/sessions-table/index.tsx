@@ -1,10 +1,10 @@
 'use client'
-import { Block } from 'shared/ui/block'
-import { Table } from 'shared/ui/table'
-import { Beer } from 'shared/types/data'
-import { Header } from './ui/header'
-import { Body } from './ui/body'
-import { useTableData } from './model'
+import { Block } from '@/shared/ui/block'
+import { Table } from '@/shared/ui/table'
+import { Beer } from '@/shared/types/data'
+import { Header } from '@/widgets/sessions-table/ui/header'
+import { Body } from '@/widgets/sessions-table/ui/body'
+import { useTableData } from '@/widgets/sessions-table/model'
 
 type Props = {
   beers: Beer[]

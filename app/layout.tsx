@@ -1,6 +1,6 @@
-import 'shared/styles/globals.css'
-import { Footer } from 'widgets/footer'
-import { Header } from 'widgets/header'
+import '@/shared/styles/globals.css'
+import { Footer } from '@/widgets/footer'
+import { Header } from '@/widgets/header'
 
 export const metadata = {
   title: 'Unstappt',

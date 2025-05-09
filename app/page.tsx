@@ -2,7 +2,7 @@
 
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { RecentUsers } from 'widgets/recent-users'
+import { RecentUsers } from '@/widgets/recent-users'
 
 export default function Page() {
   const router = useRouter()

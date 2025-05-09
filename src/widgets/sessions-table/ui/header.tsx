@@ -1,5 +1,5 @@
-import { SortKey, SortOrder } from '../model'
-import { TableHead, TableHeader, TableRow } from 'shared/ui/table'
+import { SortKey, SortOrder } from '@/widgets/sessions-table/model'
+import { TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/outline'
 
 type Props = {

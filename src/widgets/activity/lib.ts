@@ -1,5 +1,5 @@
 import { eachDayOfInterval, format } from 'date-fns'
-import { Beer } from 'shared/types/data'
+import { Beer } from '@/shared/types/data'
 
 type datasetType = { [key: string]: number }
 

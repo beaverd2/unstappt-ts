@@ -1,7 +1,7 @@
 import { differenceInHours } from 'date-fns'
 import { useEffect, useMemo, useState } from 'react'
-import { sortTable } from 'shared/lib/sort-table'
-import { Beer } from 'shared/types/data'
+import { sortTable } from '@/shared/lib/sort-table'
+import { Beer } from '@/shared/types/data'
 
 export type SortKey = 'startTime' | 'endTime' | 'total'
 export type SortOrder = 'ascn' | 'desc'

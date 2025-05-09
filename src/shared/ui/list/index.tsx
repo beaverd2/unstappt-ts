@@ -1,12 +1,12 @@
 'use client'
-import { cn } from 'shared/lib/utils'
-import { Beer, Brewery, Country, Region, Style } from 'shared/types/data'
-import { Block } from '../block'
-import { Item } from './ui/item'
-import { Button } from '../button'
-import { Select } from '../select'
-import { formatItem, getShortStyles, filterSort } from './lib'
+import { cn } from '@/shared/lib/utils'
+import { Beer, Brewery, Country, Region, Style } from '@/shared/types/data'
+import { Block } from '@/shared/ui/block'
+import { Item } from '@/shared/ui/list/ui/item'
+import { Button } from '@/shared/ui/button'
+import { formatItem, getShortStyles, filterSort } from '@/shared/ui/list/lib'
 import { useEffect, useState } from 'react'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 type Props = {
   data: Beer[] | Brewery[] | Country[] | Region[] | Style[]
@@ -37,14 +37,6 @@ export const List = ({
   )
   const items = itemsLength >= sortedData.length ? sortedData : sortedData.slice(0, itemsLength)
 
-  const handleFilter = (e: any) => {
-    setFilter(e.target?.value)
-  }
-
-  const handleStyle = (e: any) => {
-    setStyleType(e.target?.value)
-  }
-
   useEffect(() => {
     setItemsLength(5)
     setFilter(defaultFilter)
@@ -53,27 +45,31 @@ export const List = ({
 
   return (
     <Block className={cn('self-start', className)}>
-      <div className="mb-2 flex h-[42px] items-center justify-between">
-        {title && <p className="text-lg font-semibold">{title}</p>}
+      <div className="mb-2 flex  flex-col items-center justify-between gap-2 md:flex-row">
+        {title && <p className="self-start text-lg font-semibold">{title}</p>}
         {style && (
-          <Select
+          <Tabs
             value={styleType}
-            onChange={handleStyle}
-            options={[
-              { value: 'full', label: 'Full styles' },
-              { value: 'short', label: 'Short styles' },
-            ]}
-          />
+            onValueChange={(value) => setStyleType(value as 'full' | 'short')}
+            className="w-full md:w-fit"
+          >
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="full">Full styles</TabsTrigger>
+              <TabsTrigger value="short">Short styles</TabsTrigger>
+            </TabsList>
+          </Tabs>
         )}
         {filter && (
-          <Select
+          <Tabs
             value={filterValue}
-            onChange={handleFilter}
-            options={[
-              { value: 'count', label: 'Count' },
-              { value: 'rating', label: 'Rating' },
-            ]}
-          />
+            onValueChange={(value) => setFilter(value as 'count' | 'rating')}
+            className="w-full md:w-fit"
+          >
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="count">Count</TabsTrigger>
+              <TabsTrigger value="rating">Rating</TabsTrigger>
+            </TabsList>
+          </Tabs>
         )}
       </div>
       {items.map((item, index) => (

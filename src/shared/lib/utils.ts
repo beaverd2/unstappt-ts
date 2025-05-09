@@ -1,7 +1,7 @@
 import { ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { BeerData, UserData } from '../types/requests'
-import { Beer, Brewery, Country, Data, Region, Style } from '../types/data'
+import { BeerData, UserData } from '@/shared/types/requests'
+import { Beer, Brewery, Country, Data, Region, Style } from '@/shared/types/data'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

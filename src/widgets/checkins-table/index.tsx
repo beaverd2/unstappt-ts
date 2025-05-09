@@ -1,10 +1,10 @@
 'use client'
-import { Block } from 'shared/ui/block'
-import { Beer } from 'shared/types/data'
-import { Header } from './ui/header'
-import { Body } from './ui/body'
-import { Table } from 'shared/ui/table'
-import { useTableData } from './model'
+import { Block } from '@/shared/ui/block'
+import { Beer } from '@/shared/types/data'
+import { Header } from '@/widgets/checkins-table/ui/header'
+import { Body } from '@/widgets/checkins-table/ui/body'
+import { Table } from '@/shared/ui/table'
+import { useTableData } from '@/widgets/checkins-table/model'
 
 type Props = {
   beers: Beer[]

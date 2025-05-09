@@ -1,4 +1,4 @@
-import { SkeletonList } from 'shared/ui/list/ui/skeleton-list'
+import { SkeletonList } from '@/shared/ui/list/ui/skeleton-list'
 
 export const ListsSkeleton = () => {
   return (

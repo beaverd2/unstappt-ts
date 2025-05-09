@@ -1,6 +1,6 @@
-import { Block } from 'shared/ui/block'
+import { Block } from '@/shared/ui/block'
 import { format } from 'date-fns'
-import { User as UserType } from 'shared/types/data'
+import { User as UserType } from '@/shared/types/data'
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 

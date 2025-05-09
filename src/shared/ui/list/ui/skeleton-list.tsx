@@ -1,5 +1,5 @@
-import { cn } from 'shared/lib/utils'
-import { Block } from 'shared/ui/block'
+import { cn } from '@/shared/lib/utils'
+import { Block } from '@/shared/ui/block'
 
 type Props = {
   title: string

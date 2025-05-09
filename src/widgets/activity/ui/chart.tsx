@@ -9,8 +9,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
-import { getChartData } from '../lib'
-import { Beer } from 'shared/types/data'
+import { getChartData } from '@/widgets/activity/lib'
+import { Beer } from '@/shared/types/data'
 import { Line } from 'react-chartjs-2'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)

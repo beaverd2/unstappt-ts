@@ -1,4 +1,4 @@
-import { Beer, Brewery, Country, Region, Style } from 'shared/types/data'
+import { Beer, Brewery, Country, Region, Style } from '@/shared/types/data'
 
 export const formatItem = (item: Beer | Brewery | Country | Region | Style) => ({
   name: item.name,

@@ -1,5 +1,5 @@
-import { Data } from 'shared/types/data'
-import { List } from 'shared/ui/list'
+import { Data } from '@/shared/types/data'
+import { List } from '@/shared/ui/list'
 
 type Props = {
   data: Data

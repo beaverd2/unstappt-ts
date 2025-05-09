@@ -1,4 +1,4 @@
-import { Block } from 'shared/ui/block'
+import { Block } from '@/shared/ui/block'
 
 export const ActivitySkeleton = () => {
   return (
