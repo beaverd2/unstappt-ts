@@ -1,7 +1,7 @@
 import { Block } from 'shared/ui/block'
 export const CheckinsPatternSkeleton = () => {
   return (
-    <Block className="col-span-2">
+    <Block>
       <div className="mb-2 flex h-[42px] items-center justify-between">
         <p className="text-lg font-semibold">Check-ins pattern</p>
         <div className="h-7 w-24 animate-pulse bg-gray-300"></div>

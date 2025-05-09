@@ -31,7 +31,7 @@ export const RangePicker = () => {
   }
 
   return (
-    <div className="col-span-2 mb-2 flex w-full">
+    <div className="mb-2 flex w-full">
       <DatePicker
         maxDate={today}
         selected={range.startDate}

@@ -25,7 +25,7 @@ export const Statistics = ({ beers, styles, breweries, countries }: Props) => {
     countries,
   })
   return (
-    <div className="col-span-2 mx-auto flex w-full flex-wrap justify-between gap-4">
+    <div className="mx-auto flex w-full flex-wrap justify-between gap-4">
       {Object.entries(statistics).map(([key, value]) => (
         <Item label={labelMap[key]} key={key} count={value} />
       ))}

@@ -7,7 +7,7 @@ export default function Error({ error }: { error: Error }) {
   const router = useRouter()
 
   return (
-    <div className="col-span-2 flex items-center justify-center self-center">
+    <div className="flex items-center justify-center self-center">
       <Block className="flex w-auto flex-col items-center justify-center gap-4 py-8">
         <h2 className="text-xl font-semibold">Something went wrong!</h2>
         <p className="text-gray-600">{error.message || 'Unknown error'}</p>

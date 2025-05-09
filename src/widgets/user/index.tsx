@@ -10,7 +10,7 @@ type Props = {
 
 export const User = ({ user }: Props) => {
   return (
-    <Block className="col-span-2 flex-row gap-4">
+    <Block className="flex-row gap-4">
       {user.avatar && (
         <Image alt="user avatar" className="h-20 w-20 rounded-full" src={user.avatar} width={80} height={80} />
       )}

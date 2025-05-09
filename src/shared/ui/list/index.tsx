@@ -52,7 +52,7 @@ export const List = ({
   }, [data, defaultFilter])
 
   return (
-    <Block className={cn('col-span-2 self-start md:col-span-1', className)}>
+    <Block className={cn('self-start', className)}>
       <div className="mb-2 flex h-[42px] items-center justify-between">
         {title && <p className="text-lg font-semibold">{title}</p>}
         {style && (

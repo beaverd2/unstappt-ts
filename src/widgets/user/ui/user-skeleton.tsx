@@ -2,7 +2,7 @@ import { Block } from 'shared/ui/block'
 
 export const UserSkeleton = () => {
   return (
-    <Block className="col-span-2 flex-row gap-4">
+    <Block className="flex-row gap-4">
       <div className="h-20 w-20 shrink-0 animate-pulse rounded-full bg-gray-300"></div>
       <div className="flex flex-1 flex-col gap-5">
         <div className="flex justify-between gap-2">

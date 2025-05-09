@@ -20,7 +20,7 @@ export default function Page() {
   }
 
   return (
-    <div className="col-span-2 flex flex-col items-center justify-center gap-4 self-center">
+    <div className="flex flex-1 flex-col items-center justify-center gap-4">
       <form onSubmit={handleSubmit} className="w-full max-w-md">
         <input
           onChange={handleInput}
