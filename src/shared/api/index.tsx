@@ -40,16 +40,16 @@ export const fetchBeers = async ({ username, startDate, endDate, offset = 0 }: F
 
   try {
     const response = await fetch(url + params)
+    const result = await response.json()
 
     if (!response.ok) {
-      throw new Error(response.statusText)
+      throw new Error(result.meta.error_detail)
     }
 
-    const data = await response.json()
-    const beers = data.response.beers.items
+    const beers = result.response.beers.items
 
-    if (data.response.total_count > 50) {
-      const totalPages = Math.floor(data.response.total_count / 50)
+    if (result.response.total_count > 50) {
+      const totalPages = Math.floor(result.response.total_count / 50)
       const urls = Array.from({ length: totalPages }, (_, index) => {
         params.set('offset', String((index + 1) * 50))
         return url + params
