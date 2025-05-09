@@ -15,6 +15,7 @@ export const Header = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
+    if (!username.trim()) return
     router.push(`/${username}`)
     setUsername('')
     if (inputRef.current) {
