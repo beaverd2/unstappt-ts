@@ -29,7 +29,7 @@ export const RecentUsers = () => {
           <button
             key={user}
             onClick={() => handleRecentUserClick(user)}
-            className="rounded-full bg-amber-100 px-3 py-1 text-sm text-amber-800 hover:bg-amber-200"
+            className="rounded-full bg-primary/10 px-3 py-1 text-sm hover:bg-primary/20"
           >
             {user}
           </button>

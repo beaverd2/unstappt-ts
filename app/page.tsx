@@ -27,7 +27,7 @@ export default function Page() {
           value={username}
           placeholder="Enter username"
           type="text"
-          className="w-full rounded-md border border-gray-300 px-4 py-2 focus:border-amber-400 focus:outline-none"
+          className="w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none"
         />
       </form>
       <RecentUsers />
