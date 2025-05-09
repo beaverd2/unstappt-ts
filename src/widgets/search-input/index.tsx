@@ -2,6 +2,7 @@
 
 import { ChangeEvent, FormEvent, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Input } from '@/components/ui/input'
 
 interface SearchInputProps {
   placeholder?: string
@@ -36,7 +37,7 @@ export const SearchInput = ({ placeholder = 'username', className = '', onSearch
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
+      <Input
         onChange={handleInput}
         value={username}
         placeholder={placeholder}

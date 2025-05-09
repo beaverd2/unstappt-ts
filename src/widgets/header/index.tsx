@@ -8,7 +8,7 @@ export const Header = () => {
         <Link className="text-xl font-semibold md:text-4xl" href="/" passHref>
           Unstappt
         </Link>
-        <SearchInput className="w-40 rounded-md border-gray-300 md:w-auto" />
+        <SearchInput className="w-40 bg-white md:w-auto" />
       </div>
     </div>
   )
