@@ -11,12 +11,7 @@ type Props = {
 }
 
 export const Chart = ({ beers, startDate, endDate }: Props) => {
-  const chartData = getChartData({ beers, startDate, endDate })
-
-  const data = chartData.labels.map((label, index) => ({
-    date: label,
-    checkins: chartData.data[index],
-  }))
+  const data = getChartData({ beers, startDate, endDate })
 
   return (
     <div className="h-[250px] w-full">

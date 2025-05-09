@@ -9,21 +9,17 @@ type GetChartData = {
   endDate: Date
 }
 
-export const getChartData = ({ beers, startDate, endDate }: GetChartData): { labels: string[]; data: number[] } => {
-  const dataset: datasetType = {}
-  eachDayOfInterval({ start: startDate, end: endDate })
-    .map((date) => format(date, 'dd/MM/yyyy'))
-    .forEach((date) => (dataset[date] = 0))
+export const getChartData = ({ beers, startDate, endDate }: GetChartData) => {
+  const dateRange = eachDayOfInterval({ start: startDate, end: endDate }).map((date) => format(date, 'dd/MM/yyyy'))
 
-  const mapOfDates = beers
-    .map((beer) => format(new Date(beer.date), 'dd/MM/yyyy'))
-    .reduce((cnt, cur) => ((cnt[cur] = cnt[cur] + 1 || 1), cnt), {} as datasetType)
+  const beerCountsByDate = beers.reduce((counts, beer) => {
+    const dateStr = format(new Date(beer.date), 'dd/MM/yyyy')
+    counts[dateStr] = (counts[dateStr] || 0) + 1
+    return counts
+  }, {} as datasetType)
 
-  Object.keys(dataset).map((key, index) => {
-    dataset[key] = mapOfDates[key] ?? 0
-  })
-
-  const labels = Object.keys(dataset)
-  const data = Object.values(dataset)
-  return { labels, data }
+  return dateRange.map((date) => ({
+    date,
+    checkins: beerCountsByDate[date] || 0,
+  }))
 }
