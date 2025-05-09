@@ -1,88 +1,83 @@
 'use client'
 import { format } from 'date-fns'
 import { useState } from 'react'
-import DatePicker from 'react-datepicker'
-import { ButtonInput } from '@/widgets/range-picker/ui/button-input'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useRangeQuery } from '@/shared/lib/use-range-query'
 import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { cn } from '@/lib/utils'
+import { CalendarIcon } from 'lucide-react'
+import { DateRange } from 'react-day-picker'
+
 const today = new Date()
 
 export const RangePicker = () => {
   const { startDate, endDate } = useRangeQuery()
   const pathname = usePathname()
   const router = useRouter()
+  const [open, setOpen] = useState(false)
 
-  const [range, setRange] = useState<{ startDate: Date | null; endDate: Date | null }>({
-    startDate: startDate,
-    endDate: endDate,
+  const [range, setRange] = useState<DateRange | undefined>({
+    from: startDate,
+    to: endDate,
   })
 
-  const handleRange = (date: [Date | null, Date | null]) => {
-    const [start, end] = date
-    setRange({ startDate: start, endDate: end })
-    if (start && end) {
-      const startDate = format(start, 'yyyy-MM-dd')
-      const endDate = format(end, 'yyyy-MM-dd')
+  const handleSelect = (date: DateRange | undefined) => {
+    setRange(date)
+    if (date?.from && date?.to) {
+      const startDate = format(date.from, 'yyyy-MM-dd')
+      const endDate = format(date.to, 'yyyy-MM-dd')
       router.push(`${pathname}?startDate=${startDate}&endDate=${endDate}`)
+      setOpen(false)
+    }
+  }
+
+  const handleOpenChange = (open: boolean) => {
+    setOpen(open)
+    if (!open) {
+      setRange({ from: startDate, to: endDate })
     }
   }
 
   return (
     <div className="mb-2 flex w-full">
-      <DatePicker
-        maxDate={today}
-        selected={range.startDate}
-        onChange={(date) => handleRange(date)}
-        startDate={range.startDate}
-        endDate={range.endDate}
-        dateFormat="d MMMM yyyy"
-        showPopperArrow={false}
-        selectsRange
-        popperPlacement="bottom"
-        popperModifiers={[
-          {
-            name: 'offset',
-            options: {
-              offset: [0, 5],
-            },
-          },
-        ]}
-        customInput={<ButtonInput />}
-        renderCustomHeader={({
-          date,
-          decreaseMonth,
-          increaseMonth,
-          prevMonthButtonDisabled,
-          nextMonthButtonDisabled,
-        }) => (
-          <div className="flex items-center justify-between px-2 py-2">
-            <span className="text-lg font-bold text-gray-700">{format(date, 'LLLL yyyy')}</span>
-            <div className="flex gap-2">
-              <Button
-                type="button"
-                size="icon"
-                variant="outline"
-                onClick={decreaseMonth}
-                disabled={prevMonthButtonDisabled}
-              >
-                <ChevronLeft />
-              </Button>
-
-              <Button
-                type="button"
-                size="icon"
-                variant="outline"
-                onClick={increaseMonth}
-                disabled={nextMonthButtonDisabled}
-              >
-                <ChevronRight />
-              </Button>
-            </div>
-          </div>
-        )}
-      />
+      <Popover open={open} onOpenChange={handleOpenChange}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn(
+              'w-full justify-center py-4 text-center text-base font-normal',
+              !range?.from && 'text-muted-foreground'
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {range?.from ? (
+              range?.to ? (
+                <>
+                  {format(range.from, 'd MMMM yyyy')} - {format(range.to, 'd MMMM yyyy')}
+                </>
+              ) : (
+                <>{format(range.from, 'd MMMM yyyy')} - </>
+              )
+            ) : (
+              <span>Pick a date range</span>
+            )}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            initialFocus
+            mode="range"
+            defaultMonth={range?.from}
+            selected={range}
+            onSelect={handleSelect}
+            disabled={{ after: today }}
+            fromDate={new Date(0)}
+            toDate={today}
+          />
+        </PopoverContent>
+      </Popover>
     </div>
   )
 }
