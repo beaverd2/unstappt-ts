@@ -3,10 +3,10 @@ import { cn } from '@/shared/lib/utils'
 import { Beer, Brewery, Country, Region, Style } from '@/shared/types/data'
 import { Block } from '@/shared/ui/block'
 import { Item } from '@/shared/ui/list/ui/item'
-import { Button } from '@/shared/ui/button'
 import { formatItem, getShortStyles, filterSort } from '@/shared/ui/list/lib'
 import { useEffect, useState } from 'react'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Button } from '@/components/ui/button'
 
 type Props = {
   data: Beer[] | Brewery[] | Country[] | Region[] | Style[]
@@ -76,7 +76,9 @@ export const List = ({
         <Item key={item.name + index} item={formatItem(item)} filter={filterValue} link={links} />
       ))}
       {items.length < sortedData.length && (
-        <Button onClick={() => setItemsLength((length) => length + 5)}>Show more</Button>
+        <Button variant="outline" onClick={() => setItemsLength((length) => length + 5)}>
+          Show more
+        </Button>
       )}
     </Block>
   )

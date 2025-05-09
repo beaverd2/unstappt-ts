@@ -1,11 +1,10 @@
 import { forwardRef } from 'react'
-
-import { Button } from '@/shared/ui/button'
+import { Button } from '@/components/ui/button'
 
 export const ButtonInput = forwardRef(({ value, onClick }: any, ref: any) => {
   return (
-    <Button onClick={onClick} ref={ref} className="w-full" type="button">
-      {value && <p className="text-gray-900">{value}</p>}
+    <Button onClick={onClick} ref={ref} className="w-full" type="button" variant="outline">
+      {value}
     </Button>
   )
 })
