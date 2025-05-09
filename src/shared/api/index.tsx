@@ -6,6 +6,7 @@ export const fetchUser = async (username: string) => {
     client_id: process.env.CLIENT_ID ?? '',
     client_secret: process.env.CLIENT_SECRET ?? '',
   })
+
   const url = `${process.env.API_URL}/v4/user/info/${username}?${queryParams}`
 
   // const response = await fetch(url)

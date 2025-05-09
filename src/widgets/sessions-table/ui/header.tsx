@@ -1,6 +1,6 @@
 import { SortKey, SortOrder } from '@/widgets/sessions-table/model'
 import { TableHead, TableHeader, TableRow } from '@/shared/ui/table'
-import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/outline'
+import { ArrowUp, ArrowDown } from 'lucide-react'
 
 type Props = {
   sortKey: SortKey
@@ -25,9 +25,7 @@ export const Header = ({ sortKey, sortOrder, changeSort }: Props) => {
             >
               {header.label}
               {header.key === sortKey ? (
-                <>
-                  {sortOrder === 'ascn' ? <ArrowUpIcon className="h-4 w-4" /> : <ArrowDownIcon className="h-4 w-4" />}
-                </>
+                <>{sortOrder === 'ascn' ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />}</>
               ) : null}
             </span>
           </TableHead>

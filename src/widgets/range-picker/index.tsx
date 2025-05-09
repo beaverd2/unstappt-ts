@@ -4,7 +4,7 @@ import { useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { ButtonInput } from '@/widgets/range-picker/ui/button-input'
 import { IconButton } from '@/shared/ui/icon-button'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useRangeQuery } from '@/shared/lib/use-range-query'
 
@@ -67,7 +67,7 @@ export const RangePicker = () => {
                 variant="secondary"
                 onClick={decreaseMonth}
                 disabled={prevMonthButtonDisabled}
-                icon={<ChevronLeftIcon className="h-5 w-5 text-gray-600" />}
+                icon={<ChevronLeft className="h-5 w-5 text-gray-600" />}
               />
 
               <IconButton
@@ -76,7 +76,7 @@ export const RangePicker = () => {
                 variant="secondary"
                 onClick={increaseMonth}
                 disabled={nextMonthButtonDisabled}
-                icon={<ChevronRightIcon className="h-5 w-5 text-gray-600" />}
+                icon={<ChevronRight className="h-5 w-5 text-gray-600" />}
               />
             </div>
           </div>
