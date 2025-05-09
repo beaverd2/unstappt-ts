@@ -1,21 +1,17 @@
 import React, { Suspense } from 'react'
 import { Stats } from './stats'
-import { User as UserType } from 'shared/types/data'
-import { mapUserDataToUser } from 'shared/lib/utils'
 import { User } from 'widgets/user'
 import { StatsSkeleton } from 'widgets/stats-skeleton'
 import { Metadata } from 'next'
+import { fetchUser } from 'shared/api'
 
 type Props = {
   params: { username: string }
   searchParams: { [key: string]: string | undefined }
-  // searchParams: { [key: string]: string | string[] | undefined }
 }
 
-const getUser = async (username: string): Promise<UserType> => {
-  const userResponse = await fetch(`http://localhost:8080/user/${username}`, { next: { revalidate: 10 } })
-  const userData = mapUserDataToUser(await userResponse.json())
-  return userData
+const getUser = async (username: string) => {
+  return await fetchUser(username)
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

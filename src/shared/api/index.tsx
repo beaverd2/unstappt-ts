@@ -1,4 +1,5 @@
 import { format, subDays } from 'date-fns'
+import { formatBeerData, mapUserDataToUser } from 'shared/lib/utils'
 
 export const fetchUser = async (username: string) => {
   const queryParams = new URLSearchParams({
@@ -7,16 +8,12 @@ export const fetchUser = async (username: string) => {
   })
   const url = `https://api.untappd.com/v4/user/info/${username}?${queryParams}`
 
-  try {
-    const response = await fetch(url)
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    const data = await response.json()
-    return data.response.user
-  } catch (error) {
-    throw error
+  const response = await fetch(url)
+  const result = await response.json()
+  if (!response.ok) {
+    throw new Error(result.meta.error_detail)
   }
+  return mapUserDataToUser(result.response.user)
 }
 
 const today = new Date()
@@ -62,7 +59,7 @@ export const fetchBeers = async ({ username, startDate, endDate, offset = 0 }: F
       const allBeers = allResponses.map((response) => response.response.beers.items).flat()
       beers.push(...allBeers)
     }
-    return beers
+    return formatBeerData(beers)
   } catch (error) {
     throw error
   }

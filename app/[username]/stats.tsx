@@ -1,4 +1,4 @@
-import { formatBeerData } from 'shared/lib/utils'
+import { fetchBeers } from 'shared/api'
 import { Data } from 'shared/types/data'
 import { Activity } from 'widgets/activity'
 import { CheckinsPattern } from 'widgets/checkins-pattern'
@@ -9,12 +9,7 @@ import { SessionsTable } from 'widgets/sessions-table'
 import { Statistics } from 'widgets/statistics'
 
 const getData = async (username: string, startDate?: string, endDate?: string): Promise<Data> => {
-  const beersResponse = await fetch(
-    `http://localhost:8080/beer/${username}?startDate=${startDate}&endDate=${endDate}`,
-    { cache: 'no-store' }
-  )
-  const beersData = formatBeerData(await beersResponse.json())
-  return beersData
+  return await fetchBeers({ username, startDate, endDate })
 }
 
 export const Stats = async ({

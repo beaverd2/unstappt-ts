@@ -1,6 +1,6 @@
 import 'shared/styles/globals.css'
-import { Toaster } from 'shared/ui/toaster'
-import { Layout } from 'widgets/layout'
+import { Footer } from 'widgets/footer'
+import { Header } from 'widgets/header'
 
 export const metadata = {
   title: 'Unstappt',
@@ -10,10 +10,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <Layout>
-          {children}
-          <Toaster />
-        </Layout>
+        <div className="flex min-h-screen flex-col bg-gray-100">
+          <Header />
+          <main className="container mx-auto mt-4 grid flex-1 grid-cols-2 gap-4 px-4">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   )
