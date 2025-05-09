@@ -18,7 +18,7 @@ export const Body = ({ data, username }: Props) => {
       {data.map((data) => (
         <TableRow
           key={data.id}
-          className="cursor-pointer hover:bg-slate-100"
+          className="cursor-pointer hover:bg-gray-50"
           onClick={() => openInNewTab(username, data.id)}
         >
           {Object.entries(data).map(([key, value]) =>

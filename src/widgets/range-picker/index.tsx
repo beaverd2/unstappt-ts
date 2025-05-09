@@ -3,11 +3,10 @@ import { format } from 'date-fns'
 import { useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { ButtonInput } from '@/widgets/range-picker/ui/button-input'
-import { IconButton } from '@/shared/ui/icon-button'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useRangeQuery } from '@/shared/lib/use-range-query'
-
+import { Button } from '@/components/ui/button'
 const today = new Date()
 
 export const RangePicker = () => {
@@ -61,23 +60,25 @@ export const RangePicker = () => {
           <div className="flex items-center justify-between px-2 py-2">
             <span className="text-lg font-bold text-gray-700">{format(date, 'LLLL yyyy')}</span>
             <div className="flex gap-2">
-              <IconButton
+              <Button
                 type="button"
-                size="sm"
-                variant="secondary"
+                size="icon"
+                variant="outline"
                 onClick={decreaseMonth}
                 disabled={prevMonthButtonDisabled}
-                icon={<ChevronLeft className="h-5 w-5 text-gray-600" />}
-              />
+              >
+                <ChevronLeft />
+              </Button>
 
-              <IconButton
+              <Button
                 type="button"
-                size="sm"
-                variant="secondary"
+                size="icon"
+                variant="outline"
                 onClick={increaseMonth}
                 disabled={nextMonthButtonDisabled}
-                icon={<ChevronRight className="h-5 w-5 text-gray-600" />}
-              />
+              >
+                <ChevronRight />
+              </Button>
             </div>
           </div>
         )}

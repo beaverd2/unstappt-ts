@@ -36,7 +36,7 @@ const OptionalLink = ({ children, url, className }: OptionalLinkProps) => {
 export const Item = ({ item, filter, link }: Props) => {
   return (
     <OptionalLink
-      className={cn('mb-4 flex items-start bg-white', link && 'cursor-pointer transition-colors hover:bg-slate-100')}
+      className={cn('mb-4 flex items-start bg-white', link && 'cursor-pointer transition-colors hover:bg-gray-50')}
       url={item?.url}
     >
       {item?.img && (
