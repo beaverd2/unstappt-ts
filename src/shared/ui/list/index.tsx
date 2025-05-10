@@ -1,5 +1,5 @@
 'use client'
-import { cn } from '@/shared/lib/utils'
+import { cn } from '@/lib/utils'
 import { Beer, Brewery, Country, Region, Style } from '@/shared/types/data'
 import { Block } from '@/shared/ui/block'
 import { Item } from '@/shared/ui/list/ui/item'

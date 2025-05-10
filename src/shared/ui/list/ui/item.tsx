@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { ReactNode } from 'react'
-import { cn } from '@/shared/lib/utils'
+import { cn } from '@/lib/utils'
 
 type Item = {
   name: string
