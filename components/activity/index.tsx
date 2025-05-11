@@ -1,8 +1,8 @@
 'use client'
-import { Block } from '@/components/ui/block'
 import { Chart } from './ui/chart'
 import { Beer } from '@/types/data'
 import { useRangeQuery } from '@/hooks/use-range-query'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 type Props = {
   beers: Beer[]
@@ -12,13 +12,13 @@ export const Activity = ({ beers }: Props) => {
   const { startDate, endDate } = useRangeQuery()
 
   return (
-    <Block>
-      <div className="mb-2 flex h-[42px] items-center justify-between">
-        <p className="text-lg font-semibold">Activity</p>
-      </div>
-      <div className="w-full">
+    <Card className="w-full">
+      <CardHeader className="p-4">
+        <CardTitle className="text-lg">Activity</CardTitle>
+      </CardHeader>
+      <CardContent className="p-4 pt-0">
         <Chart beers={beers} startDate={startDate} endDate={endDate} />
-      </div>
-    </Block>
+      </CardContent>
+    </Card>
   )
 }

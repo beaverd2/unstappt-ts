@@ -1,4 +1,4 @@
-import { Item } from './ui/item'
+import { Card } from '@/components/ui/card'
 import { Beer, Brewery, Country, Style } from '@/types/data'
 
 type Props = {
@@ -27,7 +27,13 @@ export const Statistics = ({ beers, styles, breweries, countries }: Props) => {
   return (
     <div className="mx-auto flex w-full flex-wrap justify-between gap-4">
       {Object.entries(statistics).map(([key, value]) => (
-        <Item label={labelMap[key]} key={key} count={value} />
+        <Card
+          key={key}
+          className="flex basis-2/5 flex-col items-center rounded-md bg-background p-2 text-center shadow-md"
+        >
+          <p className="text-lg">{labelMap[key]}</p>
+          <p className="text-lg font-semibold">{value}</p>
+        </Card>
       ))}
     </div>
   )

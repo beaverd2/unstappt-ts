@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { SearchInput } from '@/components/search-input'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 export const Header = () => {
   return (
@@ -8,7 +9,10 @@ export const Header = () => {
         <Link className="text-xl font-semibold md:text-4xl" href="/" passHref>
           Unstappt
         </Link>
-        <SearchInput className="w-40 bg-white md:w-auto" />
+        <div className="flex items-center gap-4">
+          <SearchInput className="w-40 bg-background md:w-auto" />
+          <ThemeToggle />
+        </div>
       </div>
     </div>
   )

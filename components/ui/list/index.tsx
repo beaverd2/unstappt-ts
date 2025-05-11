@@ -1,12 +1,11 @@
 'use client'
-import { cn } from '@/lib/utils'
 import { Beer, Brewery, Country, Region, Style } from '@/types/data'
-import { Block } from '@/components/ui/block'
 import { Item } from './ui/item'
 import { formatItem, getShortStyles, filterSort } from './lib'
 import { useEffect, useState } from 'react'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
+import { CardContent, Card, CardHeader, CardTitle } from '../card'
 
 type Props = {
   data: Beer[] | Brewery[] | Country[] | Region[] | Style[]
@@ -44,9 +43,9 @@ export const List = ({
   }, [data, defaultFilter])
 
   return (
-    <Block className={cn('self-start', className)}>
-      <div className="mb-2 flex  flex-col items-center justify-between gap-2 md:flex-row">
-        {title && <p className="self-start text-lg font-semibold">{title}</p>}
+    <Card className={className}>
+      <CardHeader className="flex flex-col items-center justify-between gap-2 space-y-0 p-4 md:h-[68px] md:flex-row">
+        {title && <CardTitle className="self-start text-lg md:self-auto">{title}</CardTitle>}
         {style && (
           <Tabs
             value={styleType}
@@ -71,15 +70,19 @@ export const List = ({
             </TabsList>
           </Tabs>
         )}
-      </div>
-      {items.map((item, index) => (
-        <Item key={item.name + index} item={formatItem(item)} filter={filterValue} link={links} />
-      ))}
-      {items.length < sortedData.length && (
-        <Button variant="outline" onClick={() => setItemsLength((length) => length + 5)}>
-          Show more
-        </Button>
-      )}
-    </Block>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-2 p-4 pt-0">
+        <div className="flex flex-col gap-2">
+          {items.map((item, index) => (
+            <Item key={item.name + index} item={formatItem(item)} filter={filterValue} link={links} />
+          ))}
+        </div>
+        {items.length < sortedData.length && (
+          <Button className="w-full" variant="outline" onClick={() => setItemsLength((length) => length + 5)}>
+            Show more
+          </Button>
+        )}
+      </CardContent>
+    </Card>
   )
 }

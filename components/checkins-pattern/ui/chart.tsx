@@ -26,8 +26,6 @@ export const Chart = ({ beers, type }: Props) => {
         data={data}
         margin={{
           top: 12,
-          left: 12,
-          right: 12,
         }}
       >
         <CartesianGrid vertical={false} />

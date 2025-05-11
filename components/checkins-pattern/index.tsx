@@ -1,5 +1,5 @@
 'use client'
-import { Block } from '@/components/ui/block'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Chart } from './ui/chart'
 import { Beer } from '@/types/data'
 import { useEffect, useState } from 'react'
@@ -17,19 +17,19 @@ export const CheckinsPattern = ({ beers }: Props) => {
   }, [beers])
 
   return (
-    <Block>
-      <div className="mb-2 flex flex-col items-center justify-between gap-2 md:flex-row">
-        <p className="self-start text-lg font-semibold">Check-ins pattern</p>
+    <Card className="w-full">
+      <CardHeader className="flex flex-col items-center justify-between gap-2 space-y-0 p-4 md:flex-row">
+        <CardTitle className="self-start text-lg md:self-auto">Check-ins pattern</CardTitle>
         <Tabs value={type} onValueChange={(value) => setType(value as 'days' | 'hours')} className="w-full md:w-fit">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="days">Days</TabsTrigger>
             <TabsTrigger value="hours">Hours</TabsTrigger>
           </TabsList>
         </Tabs>
-      </div>
-      <div className="w-full">
+      </CardHeader>
+      <CardContent className="p-4 pt-0">
         <Chart beers={beers} type={type} />
-      </div>
-    </Block>
+      </CardContent>
+    </Card>
   )
 }

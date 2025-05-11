@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
 
 type Props = {
   className?: string
@@ -7,5 +7,5 @@ type Props = {
 }
 
 export const Block = ({ className, children }: Props) => {
-  return <div className={cn('flex w-full flex-col rounded-md bg-white p-2 shadow-md', className)}>{children}</div>
+  return <div className={cn('flex w-full flex-col rounded-md bg-background p-2 shadow-md', className)}>{children}</div>
 }
