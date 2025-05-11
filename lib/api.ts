@@ -8,10 +8,10 @@ export const fetchUser = async (username: string) => {
     client_secret: process.env.CLIENT_SECRET ?? '',
   })
 
-  const url = `${process.env.API_URL}/v4/user/info/${username}?${queryParams}`
+  const url = `${process.env.API_URL}/user/info/${username}?${queryParams}`
 
-  // const response = await fetch(url)
   const response = await fetch(url, { cache: 'no-store' })
+
   const result = await response.json()
   if (!response.ok) {
     throw new Error(result.meta.error_detail)
@@ -39,10 +39,9 @@ export const fetchBeers = async ({ username, startDate, endDate, offset = 0 }: F
     client_secret: process.env.CLIENT_SECRET ?? '',
   })
 
-  const url = `${process.env.API_URL}/v4/user/beers/${username}?`
+  const url = `${process.env.API_URL}/user/beers/${username}?`
 
   try {
-    // const response = await fetch(url + params)
     const response = await fetch(url + params, { cache: 'no-store' })
     const result = await response.json()
 

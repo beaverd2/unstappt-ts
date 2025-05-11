@@ -29,7 +29,7 @@ export default async function Page({ params, searchParams }: Props) {
     <>
       <UserStorage user={user} />
       <User user={user} />
-      <Suspense key={`${searchParams?.endDate}-${searchParams?.endDate}`} fallback={<StatsSkeleton />}>
+      <Suspense key={`${searchParams?.startDate}-${searchParams?.endDate}`} fallback={<StatsSkeleton />}>
         <Stats username={params.username} startDate={searchParams?.startDate} endDate={searchParams?.endDate} />
       </Suspense>
     </>
