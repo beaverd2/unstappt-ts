@@ -1,45 +1,40 @@
 import { getChartData } from '@/widgets/checkins-pattern/lib'
 import { Beer } from '@/shared/types/data'
-import { Bar } from 'react-chartjs-2'
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 
 type Props = {
   beers: Beer[]
   type: 'days' | 'hours'
 }
 
+const chartConfig = {
+  value: {
+    label: 'Check-ins',
+    color: '#FFBA2E',
+  },
+} as ChartConfig
+
 export const Chart = ({ beers, type }: Props) => {
   const chartData = getChartData(beers)
-  const selectedChartData = type === 'days' ? chartData.daysData : chartData.hoursData
+  const data = type === 'days' ? chartData.daysData : chartData.hoursData
 
   return (
-    <Bar
-      height={250}
-      options={{
-        maintainAspectRatio: false,
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-        scales: {
-          x: { grid: { display: false } },
-        },
-      }}
-      data={{
-        labels: selectedChartData.labels,
-        datasets: [
-          {
-            borderRadius: 4,
-            label: 'Check-ins',
-            data: selectedChartData.values,
-            backgroundColor: '#FFBA2E',
-          },
-        ],
-      }}
-    />
+    <ChartContainer config={chartConfig} className="h-[250px] w-full">
+      <BarChart
+        accessibilityLayer
+        data={data}
+        margin={{
+          left: 12,
+          right: 12,
+        }}
+      >
+        <CartesianGrid vertical={false} />
+        <XAxis dataKey="label" tickLine={false} tickMargin={10} axisLine={false} />
+        <YAxis tickLine={false} tickMargin={10} axisLine={false} width={30} />
+        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+        <Bar dataKey="value" fill="var(--color-value)" radius={4} />
+      </BarChart>
+    </ChartContainer>
   )
 }
