@@ -1,5 +1,5 @@
-import { RecentUsers } from '@/widgets/recent-users'
-import { SearchInput } from '@/widgets/search-input'
+import { RecentUsers } from '@/components/recent-users'
+import { SearchInput } from '@/components/search-input'
 
 export default function Page() {
   return (

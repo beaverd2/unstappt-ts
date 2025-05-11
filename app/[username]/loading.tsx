@@ -1,4 +1,4 @@
-import { UserSkeleton } from '@/widgets/user/ui/user-skeleton'
+import { UserSkeleton } from '@/components/user/ui/user-skeleton'
 
 export default function Loading() {
   return <UserSkeleton />

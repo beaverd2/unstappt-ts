@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react'
 import { Stats } from './stats'
-import { User } from '@/widgets/user'
-import { UserStorage } from '@/widgets/user-storage'
-import { StatsSkeleton } from '@/widgets/stats-skeleton'
+import { User } from '@/components/user'
+import { UserStorage } from '@/components/user-storage'
+import { StatsSkeleton } from '@/components/stats-skeleton'
 import { Metadata } from 'next'
-import { fetchUser } from '@/shared/api'
+import { fetchUser } from '@/lib/api'
 
 type Props = {
   params: { username: string }
