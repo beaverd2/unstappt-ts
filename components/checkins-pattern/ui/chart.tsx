@@ -25,6 +25,7 @@ export const Chart = ({ beers, type }: Props) => {
         accessibilityLayer
         data={data}
         margin={{
+          top: 12,
           left: 12,
           right: 12,
         }}
@@ -32,7 +33,7 @@ export const Chart = ({ beers, type }: Props) => {
         <CartesianGrid vertical={false} />
         <XAxis dataKey="label" tickLine={false} tickMargin={10} axisLine={false} />
         <YAxis tickLine={false} tickMargin={10} axisLine={false} width={30} />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
         <Bar dataKey="value" fill="var(--color-value)" radius={4} />
       </BarChart>
     </ChartContainer>

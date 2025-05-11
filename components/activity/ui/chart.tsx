@@ -28,6 +28,7 @@ export const Chart = ({ beers, startDate, endDate }: Props) => {
         accessibilityLayer
         data={data}
         margin={{
+          top: 12,
           left: 12,
           right: 12,
         }}
@@ -35,7 +36,7 @@ export const Chart = ({ beers, startDate, endDate }: Props) => {
         <CartesianGrid vertical={false} />
         <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
         <YAxis tickLine={false} axisLine={false} tickMargin={8} width={30} />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
         <Line
           type="monotone"
           dataKey="checkins"
