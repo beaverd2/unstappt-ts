@@ -10,7 +10,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <div className="flex min-h-screen flex-col bg-gray-100">
+        <div className="min-h-dvh flex flex-col bg-gray-100">
           <Header />
           <main className="container mx-auto mt-4 flex flex-1 flex-col items-center gap-4 px-4">{children}</main>
           <Footer />
