@@ -1,14 +1,15 @@
-import { Block } from '@/components/ui/block'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export const ActivitySkeleton = () => {
   return (
-    <Block>
-      <div className="mb-2 flex h-[42px] items-center justify-between">
-        <p className="text-lg font-semibold">Activity</p>
-      </div>
-      <div className="w-full">
-        <div className="h-[250px] animate-pulse bg-gray-300"></div>
-      </div>
-    </Block>
+    <Card className="w-full">
+      <CardHeader className="p-4">
+        <CardTitle className="text-lg">Activity</CardTitle>
+      </CardHeader>
+      <CardContent className="p-4 pt-0">
+        <Skeleton className="h-[250px] w-full" />
+      </CardContent>
+    </Card>
   )
 }

@@ -1,3 +1,9 @@
+import { Skeleton } from '@/components/ui/skeleton'
+
 export const RangePickerSkeleton = () => {
-  return <div className="mb-2 flex h-[42px] w-full animate-pulse bg-gray-300"></div>
+  return (
+    <div className="w-full rounded-md border border-input shadow-sm">
+      <Skeleton className="h-9" />
+    </div>
+  )
 }

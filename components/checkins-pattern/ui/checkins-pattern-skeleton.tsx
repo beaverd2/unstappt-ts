@@ -1,14 +1,16 @@
-import { Block } from '@/components/ui/block'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
+
 export const CheckinsPatternSkeleton = () => {
   return (
-    <Block>
-      <div className="mb-2 flex h-[42px] items-center justify-between">
-        <p className="text-lg font-semibold">Check-ins pattern</p>
-        <div className="h-7 w-24 animate-pulse bg-gray-300"></div>
-      </div>
-      <div className="w-full">
-        <div className="h-[250px] animate-pulse bg-gray-300"></div>
-      </div>
-    </Block>
+    <Card className="w-full">
+      <CardHeader className="flex flex-col items-center justify-between gap-2 space-y-0 p-4 md:flex-row">
+        <CardTitle className="self-start text-lg md:self-auto">Check-ins pattern</CardTitle>
+        <Skeleton className="h-9 w-40" />
+      </CardHeader>
+      <CardContent className="p-4 pt-0">
+        <Skeleton className="h-[250px] w-full" />
+      </CardContent>
+    </Card>
   )
 }

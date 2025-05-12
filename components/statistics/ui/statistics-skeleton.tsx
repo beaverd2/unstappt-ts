@@ -1,3 +1,6 @@
+import { Card } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
+
 const labelMap: Record<string, string> = {
   checkinsCount: 'Check-ins',
   beersCount: 'Unique check-ins',
@@ -23,9 +26,9 @@ type Props = {
 
 const ItemSkeleton = ({ label }: Props) => {
   return (
-    <div className="flex basis-2/5 flex-col items-center rounded-md bg-white p-2 text-center shadow-md">
-      <p className="text-2 mb-2">{label}</p>
-      <div className="h-6 w-10 animate-pulse bg-gray-300"></div>
-    </div>
+    <Card className="flex basis-2/5 flex-col items-center rounded-md bg-background p-2 text-center shadow-md">
+      <p className="text-lg">{label}</p>
+      <Skeleton className="h-6 w-10" />
+    </Card>
   )
 }

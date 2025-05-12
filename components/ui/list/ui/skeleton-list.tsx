@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils'
-import { Block } from '@/components/ui/block'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 type Props = {
   title: string
@@ -9,23 +9,27 @@ type Props = {
 
 export const SkeletonList = ({ title, img, className }: Props) => {
   return (
-    <Block className={cn('col-span-2 self-start md:col-span-1', className)}>
-      <div className="mb-2 flex h-[42px] items-center justify-between">
-        <p className="text-lg font-semibold">{title}</p>
-        <div className="h-7 w-24 animate-pulse bg-gray-300"></div>
-      </div>
-      {new Array(5).fill(0).map((_, index) => (
-        <div key={index} className="mb-4 flex items-start bg-white">
-          {img && (
-            <div className="mr-4 h-10 w-10 flex-shrink-0 animate-pulse self-center rounded-full bg-gray-300"></div>
-          )}
-          <div className="flex flex-col gap-3">
-            <div className="h-4 w-32 animate-pulse bg-gray-300"></div>
-            <div className="h-4 w-14 animate-pulse bg-gray-300"></div>
-            {img && <div className="h-4 w-14 animate-pulse bg-gray-300"></div>}
-          </div>
+    <Card className={className}>
+      <CardHeader className="flex flex-col items-center justify-between gap-2 space-y-0 p-4 md:h-[68px] md:flex-row">
+        <CardTitle className="self-start text-lg md:self-auto">{title}</CardTitle>
+        <div className="w-full md:w-fit">
+          <Skeleton className="h-9 w-40" />
         </div>
-      ))}
-    </Block>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-2 p-4 pt-0">
+        <div className="flex flex-col gap-2">
+          {new Array(5).fill(0).map((_, index) => (
+            <div key={index} className="flex items-start gap-4">
+              {img && <Skeleton className="h-10 w-10 flex-shrink-0 rounded-full" />}
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-4 w-14" />
+                {img && <Skeleton className="h-4 w-14" />}
+              </div>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   )
 }

@@ -1,6 +1,8 @@
 import { cn } from '@/lib/utils'
-import { Block } from '@/components/ui/block'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Skeleton } from '@/components/ui/skeleton'
+
 const headers = [
   { key: 'startTime', label: 'Start time' },
   { key: 'endTime', label: 'End time' },
@@ -9,17 +11,17 @@ const headers = [
 
 export const SessionsTableSkeleton = () => {
   return (
-    <Block>
-      <div className="mb-2 flex h-[42px] items-center justify-between">
-        <p className="text-lg font-semibold">Check-ins sessions</p>
-      </div>
-      <div className="w-full overflow-auto">
+    <Card className="w-full">
+      <CardHeader className="p-4">
+        <CardTitle className="text-lg">Check-ins sessions</CardTitle>
+      </CardHeader>
+      <CardContent className="w-full overflow-auto p-4 pt-0">
         <Table>
           <TableHeader>
             <TableRow>
               {headers.map((header) => (
                 <TableHead key={header.key} data-numeric={header.key === 'total'}>
-                  <span className="inline-flex w-fit  items-center gap-1">{header.label}</span>
+                  <span className="inline-flex w-fit items-center gap-1">{header.label}</span>
                 </TableHead>
               ))}
             </TableRow>
@@ -29,18 +31,14 @@ export const SessionsTableSkeleton = () => {
               <TableRow key={index}>
                 {headers.map((header) => (
                   <TableCell key={header.key}>
-                    {
-                      <div
-                        className={cn('h-4 w-20 animate-pulse bg-gray-300', header.key === 'total' && 'ml-auto')}
-                      ></div>
-                    }
+                    <Skeleton className={cn('h-4 w-20', header.key === 'total' && 'ml-auto')} />
                   </TableCell>
                 ))}
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </div>
-    </Block>
+      </CardContent>
+    </Card>
   )
 }

@@ -41,7 +41,7 @@ export const RangePicker = () => {
   }
 
   return (
-    <div className="mb-2 flex w-full">
+    <div className="flex w-full">
       <Popover open={open} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
           <Button

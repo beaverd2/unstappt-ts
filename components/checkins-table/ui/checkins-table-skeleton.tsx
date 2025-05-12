@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
-import { Block } from '@/components/ui/block'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const headers = [
   { key: 'name', label: 'Name' },
@@ -13,17 +14,17 @@ const headers = [
 
 export const CheckinsTableSkeleton = () => {
   return (
-    <Block>
-      <div className="mb-2 flex h-[42px] items-center justify-between">
-        <p className="text-lg font-semibold">Check-ins</p>
-      </div>
-      <div className="w-full overflow-auto">
+    <Card className="w-full">
+      <CardHeader className="p-4">
+        <CardTitle className="text-lg">Check-ins</CardTitle>
+      </CardHeader>
+      <CardContent className="w-full overflow-auto p-4 pt-0">
         <Table>
           <TableHeader>
             <TableRow>
               {headers.map((header) => (
                 <TableHead key={header.key} data-numeric={header.key === 'userRating' || header.key === 'globalRating'}>
-                  <span className="inline-flex w-fit  items-center gap-1">{header.label}</span>
+                  <span className="inline-flex w-fit items-center gap-1">{header.label}</span>
                 </TableHead>
               ))}
             </TableRow>
@@ -33,21 +34,19 @@ export const CheckinsTableSkeleton = () => {
               <TableRow key={index}>
                 {headers.map((header) => (
                   <TableCell key={header.key}>
-                    {
-                      <div
-                        className={cn(
-                          'h-4 w-20 animate-pulse bg-gray-300',
-                          (header.key === 'userRating' || header.key === 'globalRating') && 'ml-auto'
-                        )}
-                      ></div>
-                    }
+                    <Skeleton
+                      className={cn(
+                        'h-4 w-20',
+                        (header.key === 'userRating' || header.key === 'globalRating') && 'ml-auto'
+                      )}
+                    />
                   </TableCell>
                 ))}
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </div>
-    </Block>
+      </CardContent>
+    </Card>
   )
 }
