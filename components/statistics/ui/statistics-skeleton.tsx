@@ -26,7 +26,7 @@ type Props = {
 
 const ItemSkeleton = ({ label }: Props) => {
   return (
-    <Card className="flex basis-2/5 flex-col items-center rounded-md bg-background p-2 text-center shadow-md">
+    <Card className="flex basis-2/5 flex-col items-center rounded-md bg-background p-2 text-center">
       <p className="text-lg">{label}</p>
       <Skeleton className="h-6 w-10" />
     </Card>
