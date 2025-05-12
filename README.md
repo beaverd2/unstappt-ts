@@ -14,9 +14,9 @@ A Next.js application that provides detailed statistics and insights for Untappd
 
 ## Screenshots
 
-<img src="https://github.com/user-attachments/assets/eb33f94c-5c12-4b10-a826-f64c58f1627c">
-<img src="https://github.com/user-attachments/assets/1f0240b4-6bed-42f7-93b6-8311f341da58" width="382" height="382">
-<img src="https://github.com/user-attachments/assets/28ca45ec-c582-4f32-a576-799acfb3b63a" width="382" height="382">
+<img src="https://github.com/user-attachments/assets/eb33f94c-5c12-4b10-a826-f64c58f1627c" width="382" height="449">
+<img src="https://github.com/user-attachments/assets/1f0240b4-6bed-42f7-93b6-8311f341da58" width="382" height="449">
+<img src="https://github.com/user-attachments/assets/28ca45ec-c582-4f32-a576-799acfb3b63a" width="382" height="516">
 
 ## Tech Stack
 
