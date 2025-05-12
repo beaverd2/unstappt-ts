@@ -13,7 +13,7 @@ export const SkeletonList = ({ title, img, className }: Props) => {
       <CardHeader className="flex flex-col items-center justify-between gap-2 space-y-0 p-4 md:h-[68px] md:flex-row">
         <CardTitle className="self-start text-lg md:self-auto">{title}</CardTitle>
         <div className="w-full md:w-fit">
-          <Skeleton className="h-9 w-40" />
+          <Skeleton className="h-9 md:w-40" />
         </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-2 p-4 pt-0">
