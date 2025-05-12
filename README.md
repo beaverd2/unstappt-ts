@@ -1,12 +1,23 @@
-# Unstappt - untappd user statistics app.
+# Unstappt - Untappd User Statistics App
 
-Next.js app that show untappd user statistics for a certain period of time\
-Check out [live demo](https://unstappt-ts.vercel.app/)\
-[Account with the most check-ins in Russia](https://unstappt-ts.vercel.app/martun/)\
-<img src="https://user-images.githubusercontent.com/55954010/150017501-b1185423-18e3-4b4a-b754-eb49ae54b9ff.png" >
-<img src="https://user-images.githubusercontent.com/55954010/150017542-6c2b9291-d1b3-4bda-92ef-12e486356ddf.png" width="382" height="382">
-<img src="https://user-images.githubusercontent.com/55954010/150017564-c51ea84e-438c-46aa-a0ff-ab7298b7fe59.png" width="382" height="382">
+A Next.js application that provides detailed statistics and insights for Untappd users over customizable time periods.
 
-## Description
+[Live Demo](https://unstappt-ts.vercel.app/) | [Account with the most check-ins in Russia](https://unstappt-ts.vercel.app/martun/)
 
-App was made using next.js, typescript, chakra-ui, react-chartjs-2, react-datepicker, date-fns, axios.
+## Features
+
+- View detailed beer check-in statistics
+- Analyze drinking patterns over custom time periods
+- Track favorite beer styles and breweries
+- Visualize check-in data with interactive charts
+- Responsive design for all devices
+
+## Screenshots
+
+<img src="https://github.com/user-attachments/assets/eb33f94c-5c12-4b10-a826-f64c58f1627c">
+<img src="https://github.com/user-attachments/assets/1f0240b4-6bed-42f7-93b6-8311f341da58" width="382" height="382">
+<img src="https://github.com/user-attachments/assets/28ca45ec-c582-4f32-a576-799acfb3b63a" width="382" height="382">
+
+## Tech Stack
+
+Next.js 14 • TypeScript • Tailwind CSS • Shadcn/ui • Recharts • React Day Picker
