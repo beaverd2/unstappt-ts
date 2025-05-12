@@ -18,7 +18,7 @@ export const User = ({ user }: Props) => {
           <div className="flex justify-between gap-2">
             <div className="flex flex-col">
               <p>{user.firstName + ' ' + user.lastName}</p>
-              <p className="text-sm text-gray-500">{user.username}</p>
+              <p className="text-sm text-muted-foreground">{user.username}</p>
             </div>
             <div className="flex flex-col items-center">
               <p>Total</p>
@@ -30,7 +30,9 @@ export const User = ({ user }: Props) => {
             </div>
           </div>
           <div className="flex items-center justify-between">
-            <p className="text-gray-500">Joined {user.joinedDate && format(new Date(user.joinedDate), 'd MMM yyyy')}</p>
+            <p className="text-muted-foreground">
+              Joined {user.joinedDate && format(new Date(user.joinedDate), 'd MMM yyyy')}
+            </p>
             <a target="_blank" rel="noopener noreferrer" href={`https://untappd.com/user/${user.username}`}>
               <ExternalLink className="h-6 w-6" />
             </a>
