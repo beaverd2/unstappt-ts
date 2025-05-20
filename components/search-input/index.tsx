@@ -5,12 +5,11 @@ import { useRouter } from 'next/navigation'
 import { Input } from '@/components/ui/input'
 
 interface SearchInputProps {
-  placeholder?: string
   className?: string
   onSearch?: (username: string) => void
 }
 
-export const SearchInput = ({ placeholder = 'username', className = '', onSearch }: SearchInputProps) => {
+export const SearchInput = ({ className = '', onSearch }: SearchInputProps) => {
   const router = useRouter()
   const [username, setUsername] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -40,7 +39,7 @@ export const SearchInput = ({ placeholder = 'username', className = '', onSearch
       <Input
         onChange={handleInput}
         value={username}
-        placeholder={placeholder}
+        placeholder="Enter username"
         type="text"
         className={className}
         ref={inputRef}
